@@ -44,6 +44,8 @@ plainwhite:
   portfolio_image:      "assets/portfolio.png"
   html_lang: "kr"
   dark_mode: false
-  
+
+theme: plainwhite
+
 plugins:
   - jekyll-seo-tag
