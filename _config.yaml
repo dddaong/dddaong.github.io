@@ -9,3 +9,11 @@ plainwhite:
     twitter: Don'tHave
     github: dddaong.github.io
     linkedIn: Don'tHave
+
+  navigation:
+    - title: Administrate BIG-IP
+      url: "/bigip/admin"
+    - title: NGINX+ Ingress Controller
+      url: "/nginxinc"
+    - title: NGINX Controller + APIM
+      url: "/nginxapim"
