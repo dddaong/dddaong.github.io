@@ -1,3 +1,9 @@
+---
+layout: post
+title:  "dddaong.github.io open"
+date:   2021-03-23 17:35:00 +0900
+categories: etc
+---
 # dddaong.github.io
 NGINX+, BIG-IP 및 Kubernetes 관련한 삽질 기록을 포스트할 예정입니다.
 
