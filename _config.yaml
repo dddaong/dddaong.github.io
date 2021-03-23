@@ -1,1 +1,11 @@
 remote_theme: samarsault/plainwhite-jekyll
+
+plainwhite:
+  name: dddaong
+  tagline: Network Eng.
+  date_format: "%b %-d, %Y"
+
+  social_links:
+    twitter: Don'tHave
+    github: dddaong.github.io
+    linkedIn: Don'tHave
