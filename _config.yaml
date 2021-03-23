@@ -17,3 +17,5 @@ plainwhite:
       url: "/nginxinc"
     - title: NGINX Controller + APIM
       url: "/nginxapim"
+  sitemap: true
+  portfolio_image:      "assets/portfolio.png"
