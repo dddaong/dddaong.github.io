@@ -12,7 +12,7 @@ show_excerpts: true # set to true to show excerpts on the homepage
 plainwhite:
   name: dddaong
   tagline: Network Eng.
-  date_format: "%b %-d, %Y"
+  date_format: "%Y, %m %-d"
   social_links:
     #twitter: Don'tHave
     github: dddaong.github.io
