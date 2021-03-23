@@ -19,3 +19,5 @@ plainwhite:
       url: "/nginxapim"
   sitemap: true
   portfolio_image:      "assets/portfolio.png"
+  html_lang: "kr"
+
