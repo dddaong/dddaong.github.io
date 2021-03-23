@@ -13,7 +13,6 @@ plainwhite:
   name: dddaong
   tagline: Network Eng.
   date_format: "%b %-d, %Y"
-
   social_links:
     #twitter: Don'tHave
     github: dddaong.github.io
@@ -37,7 +36,8 @@ plainwhite:
       url: "/nginxinc"
     - title: NGINX Controller + APIM
       url: "/nginxapim"
-  
+
+  search: true
   sitemap: true
   portfolio_image:      "assets/portfolio.png"
   html_lang: "kr"
