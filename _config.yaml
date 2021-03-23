@@ -14,7 +14,7 @@ plainwhite:
   tagline: |
     Network Eng.
     Newbie in github
-  date_format: "%b %-d, %Y"
+  date_format: "%Y-%m-%d"
   social_links:
     #twitter: Don'tHave
     github: dddaong.github.io
