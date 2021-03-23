@@ -6,9 +6,20 @@ plainwhite:
   date_format: "%b %-d, %Y"
 
   social_links:
-    twitter: Don'tHave
+    #twitter: Don'tHave
     github: dddaong.github.io
-    linkedIn: Don'tHave
+    #linkedIn: Don'tHave
+    #rss: rss
+    #dribbble: Don'tHave
+    #flickr:   Don'tHave
+    #instagram: Don'tHave
+    #pinterest: Don'tHave
+    #youtube: Don'tHave
+    #facebook: Don'tHave
+    #soundcloud: Don'tHave
+    #telegram: Don'tHave
+    #gitlab: Don'tHave
+    #email: Don'tHave
 
   navigation:
     - title: Administrate BIG-IP
@@ -17,7 +28,11 @@ plainwhite:
       url: "/nginxinc"
     - title: NGINX Controller + APIM
       url: "/nginxapim"
+  
   sitemap: true
   portfolio_image:      "assets/portfolio.png"
   html_lang: "kr"
   dark_mode: false
+  
+plugins:
+  - jekyll-seo-tag
