@@ -5,10 +5,11 @@ date:   2021-03-24 13:14:00 +0900
 categories: nginx-ingress-controller lua
 ---
 
-## NPIC + NDK + Lua 모듈 테스트
-
 이 포스트는 nginx.com에 있는 NPIC(NGINX+ Ingress Controller) 이미지 빌드 방법에,
 필요한 다이나믹 모듈을 추가하는 테스트에 대한 기록을 작성했습니다.
+
+## NPIC + NDK + Lua 모듈 테스트
+
 
 ### 1. 임시 폴더 생성
 ```bash
