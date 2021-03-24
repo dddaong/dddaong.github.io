@@ -118,7 +118,6 @@ kubectl apply -f rbac/ap-rbac.yaml
 - Apply Common Resources
 ```bash
 kubectl apply -f common/default-server-secret.yaml
-
 kubectl apply -f common/nginx-config.yaml
 kubectl apply -f common/ingress-class.yaml
 ```
