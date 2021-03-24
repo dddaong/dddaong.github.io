@@ -54,7 +54,9 @@ nginx-plus-module-set-misc
 ```
 
 ### 4. 이미지 빌드
+```bash
 make PREFIX=nginxplus-ingress DOCKERFILE=appprotect/DockerfileWithAppProtectForPlus
+```
 
 ### 5. 테스트 환경에 Image repository가 없으므로 수동으로 노드에 이미지를 로드해줍니다.
 
@@ -80,11 +82,11 @@ cd deployments
 ```bash
 kubectl apply -f common/ns-and-sa.yaml
 kubectl apply -f rbac/rbac.yaml
-~~~
+```
 -(for NAP)
 ```bash
 kubectl apply -f rbac/ap-rbac.yaml
-~~~
+```
 
 - Apply Common Resources
 ```bash
@@ -152,11 +154,9 @@ data:
 ```
 
 ### 9. 테스트를 위해 임시로 Lua 서버 블록을 만들어 NGINX Config 테스트, Curl 테스트를 수행합니다.
-
 - Pod 내부 Bash Shell로 들어가 /etc/nginx/conf.d 디렉토리에 별도 conf 파일을 생성합니다.
 ```bash
 kubectl -n nginx-ingress exec -it <nginx-ingress Pod 이름> -- bash
-
 echo 'server {
     listen 8888;
     location / {
@@ -167,7 +167,6 @@ echo 'server {
     }
     }
 ' > /etc/nginx/conf.d/lua_test.conf
-
 nginx -s reload
 ```
 
