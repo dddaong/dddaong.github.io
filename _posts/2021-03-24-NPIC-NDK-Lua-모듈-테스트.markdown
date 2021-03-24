@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "NGINX+ Ingress Controller 이미지 빌드"
+title:  "NPIC + NDK + Lua(+@) 모듈 테스트"
 date:   2021-03-24 13:14:00 +0900
 categories: nginx-ingress-controller lua
 ---
