@@ -53,16 +53,38 @@ nginx-plus-module-headers-more
 nginx-plus-module-set-misc
 ```
 
-### 4. 이미지 빌드
+### 4. NGINX+ 라이선스를 Kubernetes-ingress 디렉토리에 복사하고, 이미지 빌드를 시작합니다.
+- NGINX+ 테스트 라이선스를 사용했습니다.
 ```bash
-make PREFIX=nginxplus-ingress DOCKERFILE=appprotect/DockerfileWithAppProtectForPlus
+cp /var/tmp/nginx-repo* /var/tmp/npic/kubernetes-ingress/
+```
+- 이미지 빌드를 시작합니다.
+```bash
+make PREFIX=dddaong/nginxplus-ingress DOCKERFILE=appprotect/DockerfileWithAppProtectForPlus
+```
+빌드가 완료되면 Repository에 업로드를 시도하기 때문에 아래 오류 메시지는 무시하셔도 좋습니다.
+```bash
+docker push dddaong/nginxplus-ingress:1.10.1
+The push refers to repository [docker.io/dddaong/nginxplus-ingress]
+88d8672f5205: Preparing
+ea7ef61b9298: Preparing
+d47136687724: Preparing
+c9373f5b7891: Preparing
+6b531f110dfa: Preparing
+c6b91badbd9f: Waiting
+11858bd34312: Waiting
+d96c33a7777a: Waiting
+df4e940be119: Waiting
+14a1ca976738: Waiting
+denied: requested access to the resource is denied
+make: *** [push] Error 1
 ```
 
 ### 5. 테스트 환경에 Image repository가 없으므로 수동으로 노드에 이미지를 로드해줍니다.
 
 - save docker image
 ```bash
-docker save samsung/nginxplus-ingress:1.10.1 -o /var/tmp/npic+openresty/samsung_npic.tgz 
+docker save dddaong/nginxplus-ingress:1.10.1 -o /var/tmp/npic+openresty/samsung_npic.tgz 
 scp /var/tmp/npic+openresty/samsung_npic.tgz root@175.196.235.22:/var/tmp
 scp /var/tmp/npic+openresty/samsung_npic.tgz root@175.196.235.23:/var/tmp
 ```
