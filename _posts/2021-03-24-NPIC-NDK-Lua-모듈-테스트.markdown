@@ -10,6 +10,9 @@ categories: nginx-ingress-controller lua
 
 ## NPIC + NDK + Lua 모듈 테스트
 
+테스트 환경은 On-Premise VM 환경에서 Kubeadm으로 구성한 Kubernetes 클러스터로,
+마스터노드(2Core 4GB), 워커노드(4Core 8G)\*2로 구성했습니다.
+
 
 ### 1. 임시 폴더 생성
 ```bash
@@ -89,9 +92,9 @@ make: *** [push] Error 1
 
 - save docker image
 ```bash
-docker save dddaong/nginxplus-ingress:1.10.1 -o /var/tmp/npic+openresty/samsung_npic.tgz 
-scp /var/tmp/npic+openresty/samsung_npic.tgz root@175.196.235.22:/var/tmp
-scp /var/tmp/npic+openresty/samsung_npic.tgz root@175.196.235.23:/var/tmp
+docker save dddaong/nginxplus-ingress:1.10.1 -o /var/tmp/npic/dddaong_npic.tgz 
+scp /var/tmp/npic/dddaong_npic.tgz root@<workernode1>:/var/tmp
+scp /var/tmp/npic/dddaong_npic.tgz.tgz root@<workernode2>:/var/tmp
 ```
 
 - load docker image @each node
