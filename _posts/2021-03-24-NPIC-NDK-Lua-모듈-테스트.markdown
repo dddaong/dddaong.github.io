@@ -42,15 +42,19 @@ cp /var/tmp/npic/kubernetes-ingress/build/appprotect/DockerfileWithAppProtectFor
 ```bash
 vi /var/tmp/npic+openresty/kubernetes-ingress/build/appprotect/DockerfileWithAppProtectForPlus
 ```
-
-... and add pkgs follows within 'yum -y install nginx-plus' cmd
-```bash
+- yum -y install nginx-plus 커맨드에 아래 패키지를 추가해줍니다.
 nginx-plus-module-ndk
 nginx-plus-module-lua
 nginx-plus-module-cookie-flag
 nginx-plus-module-encrypted-session
 nginx-plus-module-headers-more
 nginx-plus-module-set-misc
+추가한 Dockerfile은 아래 형태가 됩니다.
+(이 테스트에서는 DockerfileWithAppProtectForPlus 파일의 51번 라인을 수정했습니다.)
+```bash
+...[omitted]
+&& apt-get update && apt-get install -y nginx-plus=$NGINX_PLUS_VERSION nginx-plus-module-njs=${NGINX_NJS_VERSION} nginx-plus-module-ndk nginx-plus-module-lua nginx-plus-module        -cookie-flag nginx-plus-module-encrypted-session nginx-plus-module-headers-more nginx-plus-module-set-misc 
+...[omitted]
 ```
 
 ### 4. NGINX+ 라이선스를 Kubernetes-ingress 디렉토리에 복사하고, 이미지 빌드를 시작합니다.
