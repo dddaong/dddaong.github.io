@@ -238,7 +238,9 @@ diskmonitor: 011d004: Disk partition shared has only 0% free
 
 다음 명령어로 Default Trap 설정을 조회해볼 수 있습니다.
 
-\#cat /etc/alertd/alert.conf | grep -i diskmonitor -A 10
+```txt
+#cat /etc/alertd/alert.conf | grep -i diskmonitor -A 10
+```
 
 명령어의 결과는 아래와 같습니다.
 
