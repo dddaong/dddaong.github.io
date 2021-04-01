@@ -45,7 +45,7 @@ plainwhite:
   html_lang: "kr"
   dark_mode: false
 
-theme: plainwhite
+#theme: plainwhite
 
 plugins:
   - jekyll-seo-tag
