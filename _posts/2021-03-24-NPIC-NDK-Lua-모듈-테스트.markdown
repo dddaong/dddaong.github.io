@@ -99,7 +99,7 @@ scp /var/tmp/npic/dddaong_npic.tgz.tgz root@<workernode2>:/var/tmp
 
 - load docker image @each node
 ```bash
-docker load -i /var/tmp/samsung_npic.tgz
+docker load -i /var/tmp/dddaong_npic.tgz
 ```
 
 ### 6. NGINX+ Ingress Controller를 사용하는데 필요한 Kubernetes 리소스들을 설치합니다.
