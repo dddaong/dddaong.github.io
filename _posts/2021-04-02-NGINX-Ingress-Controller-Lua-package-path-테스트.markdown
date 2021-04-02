@@ -13,11 +13,9 @@ NGINX Ingress Controller - lua_package_path 테스트
 
 ### NGINX Ingress Controller - lua_package_path 테스트
 
-nginx-config ConfigMap 리소스의 main snippet으로 모듈로딩,
+nginx-config ConfigMap 리소스의 main snippet으로 모듈로딩, 
 nginx-config ConfigMap 리소스의 http snippet으로 lua_package_path 설정,
-마지막으로 Ingress 리소스를 통해 listen port, location을 작성해 
-
-File 형식의 Lua를 사용하는 테스트입니다.
+마지막으로 Ingress 리소스를 통해 listen port, location을 작성해 File 형식의 Lua를 사용하는 테스트입니다.
 
 
 
