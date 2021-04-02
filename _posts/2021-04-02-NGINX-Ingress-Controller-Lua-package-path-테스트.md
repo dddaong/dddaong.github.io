@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "NGINX Ingress Controller - lua_package_path 테스트"
-date:  2021-04-21 00:00:00 +0900
+date:  2021-04-02 00:00:00 +0900
 categories: NPIC lua lua_package_path
 ---
 
