@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Helm Chart를 사용해 NPIC 배포하기"
-date:   2021-04-10 00:00:00 +0900
+date:   2021-04-01 00:00:00 +0900
 categories: NPIC helm Kubernetes ingress-controller
 ---
 
