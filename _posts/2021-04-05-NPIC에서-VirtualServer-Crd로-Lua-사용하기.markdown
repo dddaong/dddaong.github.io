@@ -5,11 +5,11 @@ date:   2021-04-05 00:00:00 +0900
 categories: NPIC Kubernetes CRD VirtualServer Lua
 ---
 
+
 NPIC에서 VirtualServer Crd로 Lua 사용하기
 
 
-
-## NPIC에서 VirtualServer Crd로 Lua 사용하기
+### NPIC에서 VirtualServer Crd로 Lua 사용하기
 
 #### 1. NGINX Ingress Controller의 Virtual Server
 
