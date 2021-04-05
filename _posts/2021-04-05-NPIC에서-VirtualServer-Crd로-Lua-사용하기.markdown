@@ -1,15 +1,13 @@
 ---
 layout: post
 title:  "NPIC에서 VirtualServer Crd로 Lua 사용하기"
-date:   2021-04-05 19:45:00 +0900
+date:   2021-04-05 00:00:00 +0900
 categories: NPIC Kubernetes CRD VirtualServer Lua
 ---
 
 NPIC에서 VirtualServer Crd로 Lua 사용하기
 
-
 ## NPIC에서 VirtualServer Crd로 Lua 사용하기
-
 
 #### 1. NGINX Ingress Controller의 Virtual Server
 
@@ -234,5 +232,3 @@ curl -H host:hello-lua.test http://<Node IP>:30080
 이 동작은 VirtualServer YAML의 'Action' 부분 때문인데, 
 Action을 작성하지 않으면 Validation에 의해 Config가 Refect되기 때문에 
 임의의 Location을 작성한 것입니다.
-
-
