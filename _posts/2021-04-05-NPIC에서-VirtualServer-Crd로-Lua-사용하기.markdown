@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "NPIC에서 VirtualServer Crd로 Lua 사용하기"
-date:   2021-04-05 00:00:00 +0900
-categories: NPIC Kubernetes CRD VirtualServer Lua
+date:   2021-04-05 19:45:00 +0900
+categories: NPIC Kubernetes Lua VirtualServer
 ---
 
 NPIC에서 VirtualServer Crd로 Lua 사용하기
