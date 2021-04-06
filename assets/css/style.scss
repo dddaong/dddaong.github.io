@@ -1,6 +1,7 @@
 ---
 ---
 @import "plain";
+@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
 
 {% if site.plainwhite.search %}
   @import "search";
