@@ -119,8 +119,8 @@ server {
 
 1. 대부분의 idP는 (최신의)Key Set을 가져올 수 있는 URL을 제공합니다.
 
-2. N+는 Client Request를 수신하면 `auth_jet_key_request` Directive에 의해 idP의 고정 URL로 Subrequest를 보냅니다.
-3. `/_jwk_uri` 블록의 Subrequest에 대한 응답으로 Key Set을 수신합니다.
+2. N+는 Client Request를 수신하면 `auth_jet_key_request` Directive에 의해 `/_jwk_uri` 블록으로 Subrequest를 보냅니다.
+3. `/_jwk_uri` 블록의 proxy_pass에 의해 idP의 고정 URL로 Subrequest가 전달되고, 응답으로 Key Set을 수신합니다.
    `/_jwk_uri` Location 블록은 `internal` Directive를 사용해 외부에서는 접근할 수 없도록 합니다.
 4. 수신한 Key Set을 `proxy_cache` Directive로  `jwk keys_zone`에 캐시하여, Validation Overhead를 줄여줄 수 있습니다.
 
