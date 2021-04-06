@@ -1,11 +1,13 @@
 ---
 ---
 @import "plain";
-@import url(//fonts.googleapis.com/earlyaccess/kopubbatang.css);
+
 
 // Font-face Test From Here
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans+KR|Ubuntu+Mono);
+
 .post {
-    font-family: 'KoPub Batang', serif;
+    font-family: 'Ubuntu Mono', 'Noto Sans KR';
     font-weight: 300;
     color: #222;
     line-height: 1.9em;
