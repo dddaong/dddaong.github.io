@@ -5,7 +5,7 @@ date:   2021-04-06 14:10:00 +0900
 categories: NGINX JWT JWK
 ---
 
-NGINX Plus Ingress Controller에서 JWT 인증 관련 기능을 테스트한 내용입니다.
+JWT에 대한 짧은 정리, 그리고 NGINX Plus에서 JWT 인증 기능을 소개하는 내용입니다.
 
 ## JWT의 이해, NGINX의 JWT 인증
 
