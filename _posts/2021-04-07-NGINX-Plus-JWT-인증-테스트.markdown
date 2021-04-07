@@ -46,9 +46,7 @@ server {
 
 
 1. 이 Config는 `auth_jwt_key_file`를 사용하지 않고 `auth_jwt_key_request` Directive를 사용해 JWK를 Remote Location에서 가져오도록 작성되어 있습니다.
-
-   이 Config에서 Remote Location은 `proxy_pass`에 정의된 IdP URI입니다.
-   (대부분의 idP는 Key Set을 가져올 수 있는 URL을 제공한다고 합니다.)
+   Remote Location은 `proxy_pass`에 정의된 IdP URI입니다. (대부분의 idP는 Key Set을 가져올 수 있는 URL을 제공한다고 합니다.)
 
 2. Client Request를 수신하면 `auth_jet_key_request` Directive에 의해 `/_jwk_uri` 블록으로 Subrequest를 보냅니다.
 
