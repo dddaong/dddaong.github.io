@@ -44,7 +44,7 @@ yum -y install git
 mkdir -p /var/tmp/npic && cd /var/tmp/npic
 git clone https://github.com/nginxinc/kubernetes-ingress/
 cd kubernetes-ingress
-git checout v1.11.0
+git checkout v1.11.0
 ```
 
 
