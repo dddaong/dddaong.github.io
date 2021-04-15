@@ -202,5 +202,5 @@ Debian 리눅스 이미지를 Docker hub에서 Pulling한 후, Registry에 Push 
 
 ------
 
-Native Basic Auth, NGINX를 인증 프록시로 사용하는 방법 등은 Docker.com에서 제공하는 [링크 : Basic Auth](https://docs.docker.com/registry/deploying/#native-basic-auth), [링크: Recipes List](https://docs.docker.com/registry/recipes/)를 참고하면 되겠습니다.
+Native Basic Auth, NGINX를 인증 프록시로 사용하는 방법 등은 Docker.com에서 제공하는 문서.. [링크 : Basic Auth](https://docs.docker.com/registry/deploying/#native-basic-auth), [링크: Recipes List](https://docs.docker.com/registry/recipes/)를 참고하면 되겠습니다.
 
