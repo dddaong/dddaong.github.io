@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Docker Private(Local) Registry 테스트"
-date:   2021-04-10 15:00:00 +0900
+date:   2021-04-15 15:00:00 +0900
 categories: docker private registry Docker
 ---
 
