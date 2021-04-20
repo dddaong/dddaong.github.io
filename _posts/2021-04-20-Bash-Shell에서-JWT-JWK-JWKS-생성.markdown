@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bash Shell에서 JWT, JWK, JWKS 생성"
-date:   2021-04-19 18:00:00 +0900
+date:   2021-04-20 14:00:00 +0900
 categories: JWT JWK JWKS bash
 ---
 
@@ -9,7 +9,7 @@ Bash Shell에서 JWT, JWK, JWKS를 생성하는 과정에 대한 내용입니다
 
 ## Bash Shell에서 JWK, JWT 생성
 NGINX Plus의 JWT Validation 과정에서 Subrequest 방식을 구현하는데 필요한 환경 구성을 목적으로,
-Bash Shell에서  테스트를 기록했습니다.
+Bash Shell에서  JWK JWT 생성 테스트 과정을 기록했습니다.
 
 #### 진행 순서
 
@@ -97,10 +97,7 @@ echo ${JWT} > $varCN.token
 
 ------
 
-### JWK 생성
-
-이 과정에서는, Public Key(PEM 파일, X.509형식)에서 JWK 작성에 필요한 필드값을 구해 JWK 형식으로 작성, 
-jq를 사용해 Validation 및 출력을 수행합니다.
+### Base Knowledges...
 
 #### Based Knowledge : 필수 필드
 
@@ -213,6 +210,11 @@ echo $PEM | xxd -r -p | base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'
 
 ------
 
+### JWK 생성
+
+이 과정에서는, Public Key(PEM 파일, X.509형식)에서 JWK 작성에 필요한 필드값을 구해 JWK 형식으로 작성, 
+jq를 사용해 Validation 및 출력을 수행합니다.
+
 #### Openssl을 사용해 PEM Public / Private Key 생성 
 
 ```bash
@@ -227,7 +229,7 @@ PEM=$( cat ${varCN}.private.pem )
 
 
 
-#### Extract Modulus (in Hex)
+#### Extract Modulus (in Hex) and base64url Encode
 
 아래 openssl 명령어를 실행해 Modulus와 Exponent를 추출합니다.
 결과는 아래와 같이 Hex 형식으로 나타납니다.
@@ -258,7 +260,7 @@ echo $MOD
 
 
 
-#### Extract Exponent (in 6 Digits Hex)
+#### Extract Exponent (in 6 Digits Hex) and base64url Encode
 
 Exponent는 `65537`로 결과값이 `AQAB` 일 것으로 예상되지만, 테스트 과정이므로 동일한 과정을 거쳐줍니다.
 Modulus는 Zero-leading Hex 값이 모두 표시되지만, Exponent의 경우 010001이 10001로 표기되기 때문에 `echo`가 아닌 `printf` 커맨드를 사용합니다.
@@ -272,7 +274,34 @@ echo $EXP
 
 
 
-#### Generate JWKS
+##### Extract Modulus and Exponent (다른 방법)
+
+좀더 명확하게 Modulus와 Exponent의 Hex 값을 구하는 방법이 있습니다.
+
+```bash
+openssl asn1parse -in $varCN.public.pem
+    0:d=0  hl=3 l= 159 cons: SEQUENCE
+    3:d=1  hl=2 l=  13 cons: SEQUENCE
+    5:d=2  hl=2 l=   9 prim: OBJECT            :rsaEncryption
+   16:d=2  hl=2 l=   0 prim: NULL
+   18:d=1  hl=3 l= 141 prim: BIT STRING
+```
+asn1parse를 사용해 나타나는 결과의 `BIT STRING` 위치에 Modulus, Exponent가 있습니다.
+커맨드 실행 결과의 각 라인 맨 앞의 숫자는 offset을 의미합니다.
+그런데, RSA Key Bit 수에 따라 이 offset 숫자가 변할 때가 있어 이 방법을 사용하지 않았습니다.
+
+```bash
+openssl asn1parse -in $varCN.public.pem -strparse 18
+    0:d=0  hl=3 l= 137 cons: SEQUENCE
+    3:d=1  hl=3 l= 129 prim: INTEGER           :D22FF1D7EF070A99309298BFE5E290E20BDB11C0F86E9CC6E4106D7BF0272AB3FA616C5465606F302CD7265E8AE04796A4D2A3A15D67A1ADFEFB825757AAE59DF965EEEA15CF81E08C1652D8A36A529B8BE9BC39CC9FDB7C4BF6673491D299B55202B091D3B96F8A4079E446DAB436607ACE5620301033F594B15652AAE8A4D7
+  135:d=1  hl=2 l=   3 prim: INTEGER           :010001
+```
+
+
+
+
+
+#### Generate JWK, JWKS
 
 추출한 필수 필드를 기반으로 JWKS를 작성합니다.
 
@@ -297,7 +326,9 @@ echo $JWKS | jq > $varOU.pubkey.jwks
 
 #### Generate JWT
 
-1시간의 Expiry time을 갖는 Token을 생성합니다.
+- 1시간의 Expiry time을 갖는 Token을 생성합니다.
+
+- Signature 부분의 서명은 X.509 형식 PEM Private Key를 사용합니다.
 
 ```bash
 NOW=$( date +%s )
