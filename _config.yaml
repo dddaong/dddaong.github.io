@@ -44,7 +44,7 @@ plainwhite:
   portfolio_image:      "assets/portfolio.png"
   html_lang: "kr"
   dark_mode: false
-  disqus_shortname: dddaong
+  disqus_shortname: https-dddaong-github-io
 
 plugins:
   - jekyll-seo-tag
