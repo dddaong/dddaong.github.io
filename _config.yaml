@@ -33,7 +33,7 @@ plainwhite:
 
   navigation:
     - title: Administrate BIG-IP
-      url: "/bigip/admin"
+      url: "/bigip"
     - title: NGINX+ Ingress Controller
       url: "/nginxinc"
     - title: NGINX Controller + APIM
