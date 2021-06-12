@@ -35,7 +35,7 @@ plainwhite:
     - title: Administrate BIG-IP
       url: "/bigip"
     - title: NGINX+ Ingress Controller
-      url: "/nginxinc"
+      url: "https://dddaong.github.io"
     - title: NGINX Controller + APIM
       url: "https://dddaong.github.io/APIM/"
 
