@@ -1,0 +1,60 @@
+site_name: DDAONG WIKI
+site_url: https://wk.ddaong.ga
+repo_url: https://github.com/dddaong
+theme:
+  name: 'material'
+  font:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+  logo: assets/logo.png
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: light
+      primary: 'blue grey'
+      accent: 'indigo'
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Embrace the dark side
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: 'teal'
+      accent: 'deep orange'
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+extra:
+  social:
+          #    - icon: 'fontawesome/brands/github'
+          #      link: 'https://github.com/selfhostedshow'
+          #    - icon: 'fontawesome/brands/twitter'
+          #      link: 'https://twitter.com/selfhostedshow'
+          #    - icon: 'fontawesome/solid/fire'
+          #      link: 'https://selfhosted.show/'
+          #    - icon: 'fontawesome/solid/graduation-cap'
+          #      link: 'https://linuxacademy.com'
+          #    - icon: 'fontawesome/brands/linux'
+          #      link: 'https://jupiterbroadcasting.com'
+          #    - icon: 'fontawesome/brands/discord'
+          #      link: 'https://discord.gg/n49fgkp'
+
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true
+  - footnotes
+  - mdx_include:
+      base_path: docs
+
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+extra_css:
+  - stylesheets/extra.css
+
