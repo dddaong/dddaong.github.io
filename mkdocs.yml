@@ -1,6 +1,6 @@
 site_name: DDAONG WIKI
-site_url: https://wk.ddaong.ga
-repo_url: https://github.com/dddaong
+site_url: https://wiki.ddaong.co.kr
+repo_url: https://github.com/dddaong/dddaong.github.io
 theme:
   name: 'material'
   font:
