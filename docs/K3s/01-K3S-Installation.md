@@ -31,19 +31,13 @@ Ingress Controller로 Traefik이 설치 되는 등, 익숙하지 않은 Default 
 
 ## K3s Installation with docker
 
+### 사전 작업
 ```bash
 SVRNAME="itian.ddaong.ga"
 sudo hostnamectl set-hostname ${SVRNAME}
-
-mkdir -p /etc/rancher/k3s/
-cat << EOF > /etc/rancher/k3s/config.yaml
-write-kubeconfig-mode: 644
-token: "secret"
-cluster-cidr: 10.10.0.0/16
-service-cidr: 10.20.0.0/16
-EOF
 ```
 
+### Docker, K3S 설치 + Calico CNI
 ```bash
 # Install Docker 19.03 for k3s
 curl https://releases.rancher.com/install-docker/19.03.sh | sh
@@ -67,17 +61,7 @@ sed -i "${addlinehere}i \ \ \ \ \ \ \ \ \ \ \"container_settings\"\: \{\"allow_i
 
 kubectl apply -f calico.yaml
 
-
-# kubectl Bash Auto-Completion
-yum -y install bash-completion
-source <(kubectl completion bash)
-echo "source <(kubectl completion bash)" >> ~/.bashrc
-
 ```
-
-
-
-
 
 > 1. 설치 스크립트의 `--cluster-cidr='10.10.0.0/16'` 옵션은 Flannel CNI에 적용되는 부분으로, 이것만으로는 효과가 없습니다. 
 >    Calico를 사용하는 환경에서는 Calico YAML 파일에서 옵션을 수정해 줘야 합니다.
@@ -91,9 +75,21 @@ echo "source <(kubectl completion bash)" >> ~/.bashrc
 > 
 > `"container_settings": {"allow_ip_forwarding": true},`
 
+
+### Add-on
+```bash
+# kubectl Bash Auto-Completion
+yum -y install bash-completion
+apt -y install bash-completion
+
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+```
+
+
   
   
-#### NGINX Ingress Controller
+## NGINX Ingress Controller
 [NGINX Ingress Controller](https://kubernetes.github.io/ingress-nginx/deploy/) 
 ```bash
 curl -O https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
@@ -104,14 +100,59 @@ kubectl apply -f nginx-ingress-deploy.yaml
 ```
 
 
-#### Cert Manager Installation
+
+## Cert Manager Installation
 [Cert-Manager](https://cert-manager.io/)는 Ingress Resource의 Annotation을 확인해 인증과정을 자동으로 수행합니다.
 샘플 Yaml 파일을 설치 과정 아래 첨부합니다.
 
 ```bash
 curl -LO https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.yaml
+curl -LO https://github.com/cert-manager/cert-manager/releases/download/v1.9.1/cert-manager.crds.yaml
 
 kubectl apply -f cert-manager.yaml
+kubectl apply -f cert-manager.crds.yaml
+
+cat <<EOF > cert-manager-issuer.yaml
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: <EMAIL-ADDRESS>
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-staging
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class:  nginx
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    # The ACME server URL
+    server: https://acme-v02.api.letsencrypt.org/directory
+    # Email address used for ACME registration
+    email: <EMAIL-ADDRESS>
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    # Enable the HTTP-01 challenge provider
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+EOF
+
+kubectl apply -f cert-manager-issuer.yaml
 ```
 
 
