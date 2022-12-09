@@ -1,0 +1,298 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content=DDAONG><link href=https://wiki.ddaong.co.kr/NGINX-Plus/NGINX-Ingress-Ctlr/NGINX-Plus-Ingress-Controller%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ rel=canonical><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.4.2, mkdocs-material-8.5.10"><title>NGINX+ Ingress Controller - JWT 인증 - DDAONG WIKI</title><link rel=stylesheet href=../../../assets/stylesheets/main.975780f9.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.2505c338.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style><link rel=stylesheet href=../../../stylesheets/extra.css><script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#nginx-plus-ingress-controller-jwt class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=../../.. title="DDAONG WIKI" class="md-header__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> DDAONG WIKI </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> NGINX+ Ingress Controller - JWT 인증 </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo aria-label="Embrace the dark side" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Embrace the dark side" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=teal data-md-color-accent=deep-orange aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../.. title="DDAONG WIKI" class="md-nav__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> DDAONG WIKI </label> <div class=md-nav__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../.. class=md-nav__link> DDAONG Docs Archive </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> Docker <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Docker data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Docker </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Docker/Private-container-Local-Registry/ class=md-nav__link> Docker - Private(Local) Container Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3> F5 BIG IP <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="F5 BIG IP" data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> F5 BIG IP </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/00-F5-HW-SW-Support-Policy/ class=md-nav__link> F5 Hardware / Software Support Policy </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_2 type=checkbox id=__nav_3_2> <label class=md-nav__link for=__nav_3_2> BIG IP CIS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP CIS" data-md-level=2> <label class=md-nav__title for=__nav_3_2> <span class="md-nav__icon md-icon"></span> BIG IP CIS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-01-Calico/ class=md-nav__link> F5 BIG-IP CIS 소개 </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-02-Calico%2BClusterip/ class=md-nav__link> F5 BIG-IP CIS - Calico+ClusterIP 모드 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_3 type=checkbox id=__nav_3_3> <label class=md-nav__link for=__nav_3_3> BIG IP TS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP TS" data-md-level=2> <label class=md-nav__title for=__nav_3_3> <span class="md-nav__icon md-icon"></span> BIG IP TS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-TS/f5-ts-monitoring-prometheus-grafana/ class=md-nav__link> F5 Telemetry Streaming with Prometheus & Grafana Test </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_4 type=checkbox id=__nav_3_4> <label class=md-nav__link for=__nav_3_4> BIG IP 일반 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP 일반" data-md-level=2> <label class=md-nav__title for=__nav_3_4> <span class="md-nav__icon md-icon"></span> BIG IP 일반 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/BIG-IP-SYSLOG-Config-Sample/ class=md-nav__link> BIG-IP - Syslog Custom Config Sample </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/F5-BIG-IP-SNMP-OID/ class=md-nav__link> F5 BIG-IP - SNMP OID </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> K3s <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=K3s data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> K3s </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../K3s/00-Lightweight-Kubernetes-compare/ class=md-nav__link> Overview Lightweight Kubernetes </a> </li> <li class=md-nav__item> <a href=../../../K3s/01-K3S-Installation/ class=md-nav__link> K3S Installation for SingleNode Cluster Guide </a> </li> <li class=md-nav__item> <a href=../../../K3s/UsePrivateRegistryAsKubeService-in-K3S/ class=md-nav__link> K3s Installation with Private Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> Kubernetes <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Kubernetes data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> Kubernetes </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Kubernetes/Kube-kubeadm-install/ class=md-nav__link> K8s Installation script for Centos7 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6 checked> <label class=md-nav__link for=__nav_6> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus-Product-Install-guide/ class=md-nav__link> NGINX Product Install Guides </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_2 type=checkbox id=__nav_6_2> <label class=md-nav__link for=__nav_6_2> NGINX Controller <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Controller" data-md-level=2> <label class=md-nav__title for=__nav_6_2> <span class="md-nav__icon md-icon"></span> NGINX Controller </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Controller/API-GW-Image-build-NAP/ class=md-nav__link> NGINX Controller - NAP Container Image build </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/Arcadia-and-NGINX-Controller-Configuration-Hands-on/ class=md-nav__link> Arcadia and NGINX Controller Configuration </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/Build-NGINX-Plus-API-GW-container-image/ class=md-nav__link> NGINX Controller - NGINX Plus Container Image build </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/ConfigDB-Manual-Restore/ class=md-nav__link> ConfigDB Manual Restore </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/NGINX-Controller-Alert-%EB%A9%94%EC%9D%BC-%EC%84%A4%EC%A0%95/ class=md-nav__link> NGINX Controller - Alert 메일 설정 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/NGINX-Controller-Deployment-Guide/ class=md-nav__link> NGINX Controller Deployment Guide </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_3 type=checkbox id=__nav_6_3 checked> <label class=md-nav__link for=__nav_6_3> NGINX Ingress Ctlr <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Ingress Ctlr" data-md-level=2> <label class=md-nav__title for=__nav_6_3> <span class="md-nav__icon md-icon"></span> NGINX Ingress Ctlr </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../Helm-Chart%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-NPIC-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - Helm Chart 배포 </a> </li> <li class=md-nav__item> <a href=../NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - lua_package_path 테스트 </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> NGINX+ Ingress Controller - JWT 인증 <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> NGINX+ Ingress Controller - JWT 인증 </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#nginx-plus-ingress-controller-jwt class=md-nav__link> NGINX Plus Ingress Controller의 JWT 인증 </a> <nav class=md-nav aria-label="NGINX Plus Ingress Controller의 JWT 인증"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 테스트 환경 </a> </li> <li class=md-nav__item> <a href=#preview-policies-enable class=md-nav__link> Preview-policies Enable </a> </li> <li class=md-nav__item> <a href=#jwk class=md-nav__link> 주의 : JWK 사용 필수 요건 </a> </li> <li class=md-nav__item> <a href=#npic-jwt-rs256 class=md-nav__link> NPIC + JWT + RS256 테스트 </a> <nav class=md-nav aria-label="NPIC + JWT + RS256 테스트"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-rsa-private-key-public-key class=md-nav__link> 1. RSA Private Key / Public Key 생성 </a> </li> <li class=md-nav__item> <a href=#2-jwk-secret class=md-nav__link> 2. JWK Secret 생성 </a> </li> <li class=md-nav__item> <a href=#3-jwt class=md-nav__link> 3. 테스트를 위한 JWT 생성 </a> </li> <li class=md-nav__item> <a href=#4-1-ingress-resource class=md-nav__link> 4-1. Ingress Resource에 연동 </a> <nav class=md-nav aria-label="4-1. Ingress Resource에 연동"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#ingress-jwt-annotation class=md-nav__link> Ingress의 JWT 인증 설정 - Annotation의 사용 </a> </li> <li class=md-nav__item> <a href=#ingress-resource-annotation-yaml class=md-nav__link> Ingress Resource의 Annotation 작성 샘플 (YAML) </a> </li> <li class=md-nav__item> <a href=#ingress class=md-nav__link> Ingress 리소스 생성 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#ingress-jwt-test class=md-nav__link> Ingress JWT 인증 TEST 결과 </a> </li> <li class=md-nav__item> <a href=#4-2-virtualserver-crd class=md-nav__link> 4-2. VirtualServer Crd에 연동 </a> <nav class=md-nav aria-label="4-2. VirtualServer Crd에 연동"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#virtualserver-jwt-policy-crd class=md-nav__link> VirtualServer의 JWT 인증 설정 - Policy Crd 사용 </a> </li> <li class=md-nav__item> <a href=#policy class=md-nav__link> Policy 생성 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#virtualserver-jwt-test class=md-nav__link> VirtualServer JWT 인증 TEST 결과 </a> </li> </ul> </nav> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../NPIC%EC%97%90%EC%84%9C-VS-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - VS Crd로 Lua 사용 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_4 type=checkbox id=__nav_6_4> <label class=md-nav__link for=__nav_6_4> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=2> <label class=md-nav__title for=__nav_6_4> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ - JWT 인증 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-NAP-WAF-DoS-Install-Guide/ class=md-nav__link> NGINX Plus NAP WAF DoS Install Guide </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_7 type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7> Protocols <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Protocols data-md-level=1> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Protocols </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Protocols/Bash-Script%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-JWT-JWK-JWKS-%EC%83%9D%EC%84%B1/ class=md-nav__link> JWT - Bash Script를 사용한 JWT, JWK, JWKS 생성 </a> </li> <li class=md-nav__item> <a href=../../../Protocols/JWT%EC%9D%98%EC%9D%B4%ED%95%B4-NGINX%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D/ class=md-nav__link> JWT - JWT Concept </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_8 type=checkbox id=__nav_8> <label class=md-nav__link for=__nav_8> Tools <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Tools data-md-level=1> <label class=md-nav__title for=__nav_8> <span class="md-nav__icon md-icon"></span> Tools </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Tools/IP-Changer-Batch-Script/ class=md-nav__link> Windows IP Changer Batch Script </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#nginx-plus-ingress-controller-jwt class=md-nav__link> NGINX Plus Ingress Controller의 JWT 인증 </a> <nav class=md-nav aria-label="NGINX Plus Ingress Controller의 JWT 인증"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#_1 class=md-nav__link> 테스트 환경 </a> </li> <li class=md-nav__item> <a href=#preview-policies-enable class=md-nav__link> Preview-policies Enable </a> </li> <li class=md-nav__item> <a href=#jwk class=md-nav__link> 주의 : JWK 사용 필수 요건 </a> </li> <li class=md-nav__item> <a href=#npic-jwt-rs256 class=md-nav__link> NPIC + JWT + RS256 테스트 </a> <nav class=md-nav aria-label="NPIC + JWT + RS256 테스트"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-rsa-private-key-public-key class=md-nav__link> 1. RSA Private Key / Public Key 생성 </a> </li> <li class=md-nav__item> <a href=#2-jwk-secret class=md-nav__link> 2. JWK Secret 생성 </a> </li> <li class=md-nav__item> <a href=#3-jwt class=md-nav__link> 3. 테스트를 위한 JWT 생성 </a> </li> <li class=md-nav__item> <a href=#4-1-ingress-resource class=md-nav__link> 4-1. Ingress Resource에 연동 </a> <nav class=md-nav aria-label="4-1. Ingress Resource에 연동"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#ingress-jwt-annotation class=md-nav__link> Ingress의 JWT 인증 설정 - Annotation의 사용 </a> </li> <li class=md-nav__item> <a href=#ingress-resource-annotation-yaml class=md-nav__link> Ingress Resource의 Annotation 작성 샘플 (YAML) </a> </li> <li class=md-nav__item> <a href=#ingress class=md-nav__link> Ingress 리소스 생성 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#ingress-jwt-test class=md-nav__link> Ingress JWT 인증 TEST 결과 </a> </li> <li class=md-nav__item> <a href=#4-2-virtualserver-crd class=md-nav__link> 4-2. VirtualServer Crd에 연동 </a> <nav class=md-nav aria-label="4-2. VirtualServer Crd에 연동"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#virtualserver-jwt-policy-crd class=md-nav__link> VirtualServer의 JWT 인증 설정 - Policy Crd 사용 </a> </li> <li class=md-nav__item> <a href=#policy class=md-nav__link> Policy 생성 </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#virtualserver-jwt-test class=md-nav__link> VirtualServer JWT 인증 TEST 결과 </a> </li> </ul> </nav> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/dddaong/dddaong.github.io/edit/master/docs/NGINX-Plus/NGINX-Ingress-Ctlr/NGINX-Plus-Ingress-Controller의-JWT-인증-테스트.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1>NGINX+ Ingress Controller - JWT 인증</h1> <h2 id=nginx-plus-ingress-controller-jwt>NGINX Plus Ingress Controller의 JWT 인증<a class=headerlink href=#nginx-plus-ingress-controller-jwt title="Permanent link">&para;</a></h2> <p>NGINX Plus Ingress Controller에서 JWT 인증 관련 기능을 테스트한 내용입니다.</p> <ul> <li>NPIC의 JWT 인증은 아직 Preview Policies 상태입니다. Production 환경에서의 사용에 주의를 요합니다.</li> </ul> <h4 id=_1>테스트 환경<a class=headerlink href=#_1 title="Permanent link">&para;</a></h4> <p>Helm을 사용해 NGINX Plus Ingress Controller가 설치된 상태에서 수행했습니다.</p> <p>테스트용 백엔드는 NGINX Plus에서 제공하는 Cafe 서비스를 사용했습니다. 동일한 백엔드를 사용하려면 아래 YAML을 통해 서비스를 생성할 수 있습니다.</p> <pre><code class=language-yaml>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coffee
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coffee
+  template:
+    metadata:
+      labels:
+        app: coffee
+    spec:
+      containers:
+      - name: coffee
+        image: nginxdemos/hello:plain-text
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coffee-svc
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: coffee
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tea
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tea 
+  template:
+    metadata:
+      labels:
+        app: tea 
+    spec:
+      containers:
+      - name: tea 
+        image: nginxdemos/hello:plain-text
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tea-svc
+  labels:
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    name: http
+  selector:
+    app: tea
+</code></pre> <h4 id=preview-policies-enable>Preview-policies Enable<a class=headerlink href=#preview-policies-enable title="Permanent link">&para;</a></h4> <p>VirtualServer에서 사용하기 위한 JWT 인증을 사용하려면 Policy를 사용해야 합니다. 단, Policy는 현재 Preview 기능으로서 기본값으로 Disabled 되어 있습니다.</p> <p>아래 방법으로 enable-preview-policies Argument를 Enable로 수정해줍니다.</p> <pre><code class=language-yaml>#kubectl edit deployments.apps dddaong-nginx-ingress
+
+ ...[ommitted]
+ spec:
+  template:
+    spec:
+      containers:
+      - args:
+        - -enable-preview-policies=true
+      [ommitted] ...
+</code></pre> <h4 id=jwk>주의 : JWK 사용 필수 요건<a class=headerlink href=#jwk title="Permanent link">&para;</a></h4> <ul> <li>Secret Resource는 반드시 Policy와 같은 namespace에 위치해야 합니다.</li> <li>Secret Resource는 반드시 <code>nginx.org/jwk</code> type으로 지정되어야 하며, JWK 내용은 반드시 <code>jwk</code> key 아래 저장되어야 합니다. 그렇지 않으면 JWT Validation에 실패합니다.</li> </ul> <hr> <h3 id=npic-jwt-rs256>NPIC + JWT + RS256 테스트<a class=headerlink href=#npic-jwt-rs256 title="Permanent link">&para;</a></h3> <p>Kubernetes 기본 리소스인 Secret 리소스를 JWK로 사용한 JWT 인증을 테스트합니다. 테스트의 JWT 알고리즘은 RS256을 사용했습니다.</p> <h4 id=1-rsa-private-key-public-key>1. RSA Private Key / Public Key 생성<a class=headerlink href=#1-rsa-private-key-public-key title="Permanent link">&para;</a></h4> <p>jwk 생성을 위해 <a href=https://mkjwk.org/ >mkjwk: simple JSON Web Key generator</a>를 사용합니다.</p> <p>아래는 생성시 선택한 옵션입니다.</p> <table> <thead> <tr> <th align=center>Tab</th> <th align=center>Key Size</th> <th align=center>Key Use</th> <th align=center>Algorithm</th> <th align=center>Key ID</th> <th align=center>Show X.509</th> </tr> </thead> <tbody> <tr> <td align=center>RSA</td> <td align=center>2048</td> <td align=center>Signature</td> <td align=center>RS256</td> <td align=center>Specify [0001]</td> <td align=center>Yes</td> </tr> </tbody> </table> <p>이 사이트에서 생성된 내용을 바탕으로 JWKS Secret 리소스 및 테스트를 위한 JWT를 생성합니다.</p> <h4 id=2-jwk-secret>2. JWK Secret 생성<a class=headerlink href=#2-jwk-secret title="Permanent link">&para;</a></h4> <p>직전 과정에서 생성한 Public Key로 NGINX Ingress Controller가 요구하는 형태의 Secret 리소스를 생성합니다.</p> <p>주의사항(필수요건)을 한 번 더 짚어보면...</p> <blockquote> <p>반드시 Policy와 같은 namespace에 위치해야 합니다.</p> <p>Secret Resource는 반드시 <code>nginx.org/jwk</code> type으로 지정되어야 하며, JWK 내용은 반드시 <code>jwk</code> key 아래 저장되어야 합니다.</p> </blockquote> <p>mkjwk에서 생성된 JSON 형식의 Public Key는 아래와 같습니다.</p> <pre><code class=language-json>{
+    &quot;kty&quot;: &quot;RSA&quot;,
+    &quot;e&quot;: &quot;AQAB&quot;,
+    &quot;use&quot;: &quot;sig&quot;,
+    &quot;kid&quot;: &quot;0001&quot;,
+    &quot;alg&quot;: &quot;RS256&quot;,
+    &quot;n&quot;: &quot;ttMDOhyzsRtk5GGBsz7bcIimto_vY2QXU5Vgg3hic7lXMsGVmfypF1aYlyC1a6nkuwmf1rSp5yZd0fJDg4vPWeYT8OtynGF-lzc7PQ-cuSxR-m1uc6qQsP7zvxicl-Jb81nDn2eZ8eVJor0ME0XrsnOsQfy4kPJtex8tkWMZ7DNycaxo_dxcBwqhVFJkGbFv9vzuVctEjIsozCE5XJbVsp8UYKtOIrDomDmar4XSw-JtylgUWti5XbSZmAFM_oF-Vp_wGFhbgmNATnddtoT8VRdu9ky7UyUSIuEG5q-QkfbFrlxeGqJc_2Y7OpYJ_P6jzmHOUo8exLp8EkT6B55qmw&quot;
+}
+</code></pre> <pre><code class=language-json>{ &quot;keys&quot;:
+[{
+    &quot;kty&quot;: &quot;RSA&quot;,
+    &quot;e&quot;: &quot;AQAB&quot;,
+    &quot;use&quot;: &quot;sig&quot;,
+    &quot;kid&quot;: &quot;0001&quot;,
+    &quot;alg&quot;: &quot;RS256&quot;,
+    &quot;n&quot;: &quot;ttMDOhyzsRtk5GGBsz7bcIimto_vY2QXU5Vgg3hic7lXMsGVmfypF1aYlyC1a6nkuwmf1rSp5yZd0fJDg4vPWeYT8OtynGF-lzc7PQ-cuSxR-m1uc6qQsP7zvxicl-Jb81nDn2eZ8eVJor0ME0XrsnOsQfy4kPJtex8tkWMZ7DNycaxo_dxcBwqhVFJkGbFv9vzuVctEjIsozCE5XJbVsp8UYKtOIrDomDmar4XSw-JtylgUWti5XbSZmAFM_oF-Vp_wGFhbgmNATnddtoT8VRdu9ky7UyUSIuEG5q-QkfbFrlxeGqJc_2Y7OpYJ_P6jzmHOUo8exLp8EkT6B55qmw&quot;
+}]
+}
+</code></pre> <p>이 내용을 Key Set 형태로 바꿔서 <code>jwk</code> 파일로 저장해줍니다. 필수 요건을 만족하기 위해 파일이름을 <code>jwk</code>로 지정하는 것이 좋습니다.</p> <p>만일 이름을 다르게 사용하려고 한다면, 생성한 JWKS가 요건을 만족하도록 Secret 리소스의 Key 이름을 수정하는 과정이 필요합니다.</p> <p>이 파일을 통해 아래 명령어를 통해 Secret 리소스를 생성합니다.</p> <pre><code class=language-bash>kubectl create secret generic dddaong-jwks --type=nginx.org/jwk --from-file=jwk
+</code></pre> <p>아래의 명령어로 Secret 리소스를 확인할 수 있습니다.</p> <pre><code class=language-bash>kubectl get secret dddaong-jwks -o yaml
+</code></pre> <pre><code class=language-yaml>apiVersion: v1
+data:
+  jwk: eyAia2V5cyI6Clt7CiAgICAia3R5IjogIlJTQSIsCiAgICAiZSI6ICJBUUFCIiwKICAgICJ1c2UiOiAic2lnIiwKICAgICJraWQiOiAiMDAwMSIsCiAgICAiYWxnIjogIlJTMjU2IiwKICAgICJuIjogInR0TURPaHl6c1J0azVHR0JzejdiY0lpbXRvX3ZZMlFYVTVWZ2czaGljN2xYTXNHVm1meXBGMWFZbHlDMWE2bmt1d21mMXJTcDV5WmQwZkpEZzR2UFdlWVQ4T3R5bkdGLWx6YzdQUS1jdVN4Ui1tMXVjNnFRc1A3enZ4aWNsLUpiODFuRG4yZVo4ZVZKb3IwTUUwWHJzbk9zUWZ5NGtQSnRleDh0a1dNWjdETnljYXhvX2R4Y0J3cWhWRkprR2JGdjl2enVWY3RFaklzb3pDRTVYSmJWc3A4VVlLdE9JckRvbURtYXI0WFN3LUp0eWxnVVd0aTVYYlNabUFGTV9vRi1WcF93R0ZoYmdtTkFUbmRkdG9UOFZSZHU5a3k3VXlVU0l1RUc1cS1Ra2ZiRnJseGVHcUpjXzJZN09wWUpfUDZqem1IT1VvOGV4THA4RWtUNkI1NXFtdyIKfV0KfQo=
+kind: Secret
+metadata:
+  creationTimestamp: &quot;2021-04-13T06:55:14Z&quot;
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:data:
+        .: {}
+        f:jwk: {}
+      f:type: {}
+    manager: kubectl-create
+    operation: Update
+    time: &quot;2021-04-13T06:55:14Z&quot;
+  name: dddaong-jwks
+  namespace: default
+  resourceVersion: &quot;3335260&quot;
+  uid: bfd83b04-0ce2-4302-b53d-a9b115320b91
+type: nginx.org/jwk
+</code></pre> <h4 id=3-jwt>3. 테스트를 위한 JWT 생성<a class=headerlink href=#3-jwt title="Permanent link">&para;</a></h4> <p>인증하려는 JWT도 작성합니다. 참고 링크: <a href=https://learn.akamai.com/en-us/webhelp/iot/jwt-access-control/GUID-CB17F8FF-3367-4D4B-B3FE-FDBA53A5EA02.html>RSA Signed JWT 생성 방법</a></p> <p>NGINX Plus에서 JWT 작성에 사용한 방법과 동일하게 jwt.io의 Debugger를 사용합니다.</p> <ol> <li>Header와 Payload를 각각 작성해 Base64url 인코딩합니다.</li> </ol> <pre><code class=language-bash>HEAD=$(echo -n '{&quot;alg&quot;:&quot;RS256&quot;,&quot;typ&quot;:&quot;JWT&quot;,&quot;kid&quot;:&quot;0001&quot;}' | base64 | sed s/\+/-/ | sed -E s/=+$//)
+PAYLOAD=$(echo -n '{&quot;sub&quot;:&quot;RS256NPICTEST&quot;,&quot;aud&quot;:&quot;dddaong&quot;,&quot;iat&quot;: 1618295120}' | base64 | sed s/\+/-/ | sed -E s/=+$//)
+echo &quot;$HEAD.$PAYLOAD&quot;
+</code></pre> <p>결과물은 아래와 같이 나옵니다.</p> <pre><code class=language-bash>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJSUzI1NlRFU1QiLCJhdWQiOiJkZGRhb25nIn0
+</code></pre> <ol> <li>생성한 내용을 <a href=https://jwt.io/#debugger-io>jwt.io Debugger</a>에 Encoded 부분에 붙여넣습니다.</li> <li><a href=https://jwt.io/#debugger-io>jwt.io Debugger</a> 우측 Decoded의 Verify Signature 항목의 아래쪽 박스에 <a href=https://mkjwk.org/ >mkjwk JSON Web Key Generator</a>에서 생성한 Private Key(X.509 PEM 포맷)을 붙여넣습니다. Private Key를 붙여넣는 즉시 Encoded에 JWT가 완성되어 나타납니다.</li> </ol> <p>결과물은 아래와 같이 나옵니다.</p> <pre><code class=language-bash>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAwMDEifQ.eyJzdWIiOiJSUzI1Nk5QSUNURVNUIiwiYXVkIjoiZGRkYW9uZyIsImlhdCI6MTYxODI5NTEyMH0.kaJmcz1YLWOjBUrqMnPR8Kzh8nqG92GFMXYmpOVkjlx7NzxNZ_6e6gv6ziR9UhiiYOICqwwzpLUN9DerumGSRCNe6m_640oA0HnS1MkgSc9Q4V9g7DT66UpM4gfDC9WJlRoigolD8cXG5V479Dun3VOvKvwmDDr4NYMPSh8w-L056Lk6lqZEZktXjIYbTaB9S4gLWhbxsrA61C97Va71dbqKqDc0TJ0oTTCLtyRx3EzsfETGil44uMowfGGVb5Y_S5vojv_dwsFkmxjBH7EbvLsvRwYcahrqtxfF6YCXTwvnppxhI9iHWBQaNF4Zkvsk1XzzhCE3NPjpWPxqjQaE8g
+</code></pre> <ol> <li>테스트 과정에서는 편의를 위해 전체 토큰 스트링을 dddaong.token 이름의 별도 파일로 저장했습니다.</li> </ol> <pre><code class=language-bash>echo 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAwMDEifQ.eyJzdWIiOiJSUzI1Nk5QSUNURVNUIiwiYXVkIjoiZGRkYW9uZyIsImlhdCI6MTYxODI5NTEyMH0.kaJmcz1YLWOjBUrqMnPR8Kzh8nqG92GFMXYmpOVkjlx7NzxNZ_6e6gv6ziR9UhiiYOICqwwzpLUN9DerumGSRCNe6m_640oA0HnS1MkgSc9Q4V9g7DT66UpM4gfDC9WJlRoigolD8cXG5V479Dun3VOvKvwmDDr4NYMPSh8w-L056Lk6lqZEZktXjIYbTaB9S4gLWhbxsrA61C97Va71dbqKqDc0TJ0oTTCLtyRx3EzsfETGil44uMowfGGVb5Y_S5vojv_dwsFkmxjBH7EbvLsvRwYcahrqtxfF6YCXTwvnppxhI9iHWBQaNF4Zkvsk1XzzhCE3NPjpWPxqjQaE8g' &gt; dddaong.token
+</code></pre> <hr> <h4 id=4-1-ingress-resource>4-1. Ingress Resource에 연동<a class=headerlink href=#4-1-ingress-resource title="Permanent link">&para;</a></h4> <h5 id=ingress-jwt-annotation>Ingress의 JWT 인증 설정 - Annotation의 사용<a class=headerlink href=#ingress-jwt-annotation title="Permanent link">&para;</a></h5> <p>JWT 인증을 Ingress Resource에 연동할 때는 Annotation 형태로 정의 됩니다.</p> <p>NPIC가 지원하는 Annotation은 네 가지 입니다.</p> <ul> <li> <p>[필수] <code>nginx.com/jwt-key: "secret"</code> : JWT를 인증할 Secret 리소스의 이름을 지정합니다.</p> </li> <li> <p>[옵션] <code>nginx.com/jwt-realm: "realm"</code> : Realm 명을 지정합니다.</p> </li> <li> <p>[옵션] <code>nginx.com/jwt-token: "token"</code> : JWT의 위치를 지정합니다. 변수를 사용할 수 있습니다.</p> </li> <li> <p>token : 기본값이며, Authorization 헤더에서 Bearer 토큰을 사용하는 방식입니다.</p> </li> <li><code>$http_*name*</code> : JWT의 위치를 'name' 헤더로 변경합니다.</li> <li><code>$cookie_auth_token</code> : JWT의 위치를 auth_token이라는 이름의 cookie 값으로 사용합니다.</li> <li><code>$arg_apijwt</code> : JWT의 위치를 apijwt라는 이름의 Argument의 값으로 사용합니다.</li> <li>[옵션]<code>nginx.com/jwt-login-url: "url"</code> : JWT가 없거나 유효하지 않은 경우 Redirect할 URL을 지정합니다.</li> </ul> <p>cookie_name 변수와 arg_name의 변수 이름은 lowercase로, <code>-</code>는 <code>_</code>로 대체됩니다. 더 자세한 내용은 <a href=http://nginx.org/en/docs/http/ngx_http_core_module.html#variables>ngx_http_core_module 모듈의 Embedded Variables</a>를 참조하면 좋습니다.</p> <h5 id=ingress-resource-annotation-yaml>Ingress Resource의 Annotation 작성 샘플 (YAML)<a class=headerlink href=#ingress-resource-annotation-yaml title="Permanent link">&para;</a></h5> <pre><code class=language-yaml>apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: cafe-ingress
+  annotations:
+    nginx.com/jwt-key: &quot;cafe-jwk&quot; 
+    nginx.com/jwt-realm: &quot;Cafe App&quot;  
+    nginx.com/jwt-token: &quot;$cookie_auth_token&quot;
+    nginx.com/jwt-login-url: &quot;https://login.example.com&quot;
+spec:
+</code></pre> <p>Ingress Resource 관련한 이상의 내용은 <a href=https://github.com/nginxinc/kubernetes-ingress/blob/master/examples/jwt/README.md>NGINX INC Github 참고 페이지</a>에 예시와 함께 상세히 설명되어 있습니다.</p> <h5 id=ingress>Ingress 리소스 생성<a class=headerlink href=#ingress title="Permanent link">&para;</a></h5> <p>테스트에 사용한 Ingress 리소스는 아래와 같습니다.</p> <pre><code class=language-yaml>apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: dddaong-jwt-test
+  annotations:
+    nginx.com/jwt-key: &quot;dddaong-jwks&quot;
+    nginx.com/jwt-realm: &quot;dddaong&quot;
+spec:
+  rules:
+  - host: auth-ing.test
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: coffee-svc
+          servicePort: 80
+</code></pre> <h4 id=ingress-jwt-test>Ingress JWT 인증 TEST 결과<a class=headerlink href=#ingress-jwt-test title="Permanent link">&para;</a></h4> <p>NPIC의 Service 리소스의 ClusterIP로 Curl 명령어를 통해 인증 여부를 확인합니다.</p> <ul> <li>Case : Authentication Failure</li> </ul> <pre><code class=language-bash>curl -IvH 'host:auth-ing.test' http://10.97.46.125                   * About to connect() to 10.97.46.125 port 80 (#0)
+*   Trying 10.97.46.125...
+* Connected to 10.97.46.125 (10.97.46.125) port 80 (#0)
+&gt; HEAD / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Accept: */*
+&gt; host:auth-ing.test
+&gt;
+&lt; HTTP/1.1 401 Unauthorized
+HTTP/1.1 401 Unauthorized
+&lt; Server: nginx/1.19.5
+Server: nginx/1.19.5
+&lt; Date: Tue, 13 Apr 2021 07:14:10 GMT
+Date: Tue, 13 Apr 2021 07:14:10 GMT
+&lt; Content-Type: text/html
+Content-Type: text/html
+&lt; Content-Length: 179
+Content-Length: 179
+&lt; Connection: keep-alive
+Connection: keep-alive
+&lt; WWW-Authenticate: Bearer realm=&quot;dddaong&quot;
+WWW-Authenticate: Bearer realm=&quot;dddaong&quot;
+
+&lt;
+* Connection #0 to host 10.97.46.125 left intact
+</code></pre> <ul> <li>Case : Authentication Success</li> </ul> <pre><code class=language-bash># curl -IvH 'host:auth-ing.test' -H &quot;Authorization: Bearer `cat dddaong.token`&quot; http://10.97.46.125
+* About to connect() to 10.97.46.125 port 80 (#0)
+*   Trying 10.97.46.125...
+* Connected to 10.97.46.125 (10.97.46.125) port 80 (#0)
+&gt; HEAD / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Accept: */*
+&gt; host:auth-ing.test
+&gt; Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAwMDEifQ.eyJzdWIiOiJSUzI1Nk5QSUNURVNUIiwiYXVkIjoiZGRkYW9uZyIsImlhdCI6MTYxODI5NTEyMH0.kaJmcz1YLWOjBUrqMnPR8Kzh8nqG92GFMXYmpOVkjlx7NzxNZ_6e6gv6ziR9UhiiYOICqwwzpLUN9DerumGSRCNe6m_640oA0HnS1MkgSc9Q4V9g7DT66UpM4gfDC9WJlRoigolD8cXG5V479Dun3VOvKvwmDDr4NYMPSh8w-L056Lk6lqZEZktXjIYbTaB9S4gLWhbxsrA61C97Va71dbqKqDc0TJ0oTTCLtyRx3EzsfETGil44uMowfGGVb5Y_S5vojv_dwsFkmxjBH7EbvLsvRwYcahrqtxfF6YCXTwvnppxhI9iHWBQaNF4Zkvsk1XzzhCE3NPjpWPxqjQaE8g
+&gt;
+&lt; HTTP/1.1 200 OK
+HTTP/1.1 200 OK
+&lt; Server: nginx/1.19.5
+Server: nginx/1.19.5
+&lt; Date: Tue, 13 Apr 2021 07:15:00 GMT
+Date: Tue, 13 Apr 2021 07:15:00 GMT
+&lt; Content-Type: text/plain
+Content-Type: text/plain
+&lt; Content-Length: 157
+Content-Length: 157
+&lt; Connection: keep-alive
+Connection: keep-alive
+&lt; Expires: Tue, 13 Apr 2021 07:14:59 GMT
+Expires: Tue, 13 Apr 2021 07:14:59 GMT
+&lt; Cache-Control: no-cache
+Cache-Control: no-cache
+
+&lt;
+* Connection #0 to host 10.97.46.125 left intact
+</code></pre> <hr> <h4 id=4-2-virtualserver-crd>4-2. VirtualServer Crd에 연동<a class=headerlink href=#4-2-virtualserver-crd title="Permanent link">&para;</a></h4> <h5 id=virtualserver-jwt-policy-crd>VirtualServer의 JWT 인증 설정 - Policy Crd 사용<a class=headerlink href=#virtualserver-jwt-policy-crd title="Permanent link">&para;</a></h5> <p>JWT 인증을 VirtualServer Resource에 연동할 때는 별도의 Policy 리소스로 정의 됩니다. JWT의 위치 변경 (Header, Cookie, Argument) 역시 Policy에서 설정합니다.</p> <p>아래는 YAML 형식의 Policy Crd 샘플입니다.</p> <pre><code class=language-yaml>apiVersion: k8s.nginx.org/v1
+kind: Policy
+metadata:
+  name: jwk-auth
+spec:
+  jwt:
+    secret: dddaong-jwk-secret  # Secret 리소스 이름을 지정합니다.
+    realm: &quot;myrealm&quot;    # Realm 이름을 지정합니다.
+    token: $http_token  # Token 위치를 지정합니다.
+</code></pre> <p>Ingress 리소스와 마찬가지로 Token 위치를 별도로 지정할 수 있습니다. 지정하지 않으면 기본값을 사용하며, 기본값은 표준 헤더 <code>Authorization: Bearer &lt;token&gt;</code> 입니다.</p> <pre><code class=language-yaml>spec:
+  jwt:
+    secret: jwk-secret
+    realm: &quot;myrealm&quot;
+    token: $cookie_cookiename #$arg_argname 또는 $http_headername
+</code></pre> <p>다른 경우와 마찬가지로 변수 이름은 lowercase로, <code>-</code>는 <code>_</code>로 대체됩니다. 더 자세한 내용은 <a href=http://nginx.org/en/docs/http/ngx_http_core_module.html#variables>ngx_http_core_module 모듈의 Embedded Variables</a>를 참조하면 좋습니다.</p> <h5 id=policy>Policy 생성<a class=headerlink href=#policy title="Permanent link">&para;</a></h5> <p>인증 테스트에 사용한 Policy Crd는 아래와 같습니다.</p> <pre><code class=language-yaml>apiVersion: k8s.nginx.org/v1
+kind: Policy
+metadata:
+  name: dddaong-jwk-auth
+spec:
+  jwt:
+    secret: dddaong-jwks
+    realm: &quot;dddaong&quot;
+</code></pre> <p>Policy를 아래와 같이 VirtualServer에 연동해줍니다.</p> <pre><code class=language-yaml>apiVersion: k8s.nginx.org/v1
+kind: VirtualServer
+metadata:
+  name: dddaong-jwt-test
+spec:
+  host: auth.test
+  policies: 
+  - name: dddaong-jwk-auth
+  upstreams: 
+  - name: coffee
+    service: coffee-svc
+    port: 80
+  routes: 
+  - path: /
+    action:
+      pass: coffee
+</code></pre> <p>VirtualServer의 upstream과 routes 부분은 테스트할 Application에 맞게 수정해서 사용하시면 됩니다.</p> <h4 id=virtualserver-jwt-test>VirtualServer JWT 인증 TEST 결과<a class=headerlink href=#virtualserver-jwt-test title="Permanent link">&para;</a></h4> <p>NPIC의 Service 리소스의 ClusterIP로 Curl 명령어를 통해 인증 여부를 확인합니다.</p> <ul> <li>Case : Authentication Failure</li> </ul> <pre><code class=language-bash>[root@kube-master jwt]# curl -IvH 'host:auth.test' http://10.97.46.125
+* About to connect() to 10.97.46.125 port 80 (#0)
+*   Trying 10.97.46.125...
+* Connected to 10.97.46.125 (10.97.46.125) port 80 (#0)
+&gt; HEAD / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Accept: */*
+&gt; host:auth.test
+&gt;
+&lt; HTTP/1.1 401 Unauthorized
+HTTP/1.1 401 Unauthorized
+&lt; Server: nginx/1.19.5
+Server: nginx/1.19.5
+&lt; Date: Tue, 13 Apr 2021 07:04:59 GMT
+Date: Tue, 13 Apr 2021 07:04:59 GMT
+&lt; Content-Type: text/html
+Content-Type: text/html
+&lt; Content-Length: 179
+Content-Length: 179
+&lt; Connection: keep-alive
+Connection: keep-alive
+&lt; WWW-Authenticate: Bearer realm=&quot;dddaong&quot;
+WWW-Authenticate: Bearer realm=&quot;dddaong&quot;
+
+&lt;
+* Connection #0 to host 10.97.46.125 left intact
+</code></pre> <ul> <li>Case : Authentication Success</li> </ul> <pre><code class=language-bash># curl -IvH 'host:auth.test' -H &quot;Authorization: Bearer `cat dddaong.token`&quot; http://10.97.46.125
+* About to connect() to 10.97.46.125 port 80 (#0)
+*   Trying 10.97.46.125...
+* Connected to 10.97.46.125 (10.97.46.125) port 80 (#0)
+&gt; HEAD / HTTP/1.1
+&gt; User-Agent: curl/7.29.0
+&gt; Accept: */*
+&gt; host:auth.test
+&gt; Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjAwMDEifQ.eyJzdWIiOiJSUzI1Nk5QSUNURVNUIiwiYXVkIjoiZGRkYW9uZyIsImlhdCI6MTYxODI5NTEyMH0.kaJmcz1YLWOjBUrqMnPR8Kzh8nqG92GFMXYmpOVkjlx7NzxNZ_6e6gv6ziR9UhiiYOICqwwzpLUN9DerumGSRCNe6m_640oA0HnS1MkgSc9Q4V9g7DT66UpM4gfDC9WJlRoigolD8cXG5V479Dun3VOvKvwmDDr4NYMPSh8w-L056Lk6lqZEZktXjIYbTaB9S4gLWhbxsrA61C97Va71dbqKqDc0TJ0oTTCLtyRx3EzsfETGil44uMowfGGVb5Y_S5vojv_dwsFkmxjBH7EbvLsvRwYcahrqtxfF6YCXTwvnppxhI9iHWBQaNF4Zkvsk1XzzhCE3NPjpWPxqjQaE8g
+&gt;
+&lt; HTTP/1.1 200 OK
+HTTP/1.1 200 OK
+&lt; Server: nginx/1.19.5
+Server: nginx/1.19.5
+&lt; Date: Tue, 13 Apr 2021 07:06:11 GMT
+Date: Tue, 13 Apr 2021 07:06:11 GMT
+&lt; Content-Type: text/plain
+Content-Type: text/plain
+&lt; Content-Length: 157
+Content-Length: 157
+&lt; Connection: keep-alive
+Connection: keep-alive
+&lt; Expires: Tue, 13 Apr 2021 07:06:10 GMT
+Expires: Tue, 13 Apr 2021 07:06:10 GMT
+&lt; Cache-Control: no-cache
+Cache-Control: no-cache
+
+&lt;
+* Connection #0 to host 10.97.46.125 left intact
+</code></pre> <p>별도 참조... - <a href=http://jwtbuilder.jamiekurtz.com/ >HS256 JWT 생성기</a></p> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class="md-footer__link md-footer__link--prev" aria-label="Previous: NGINX+ Ingress Controller - lua_package_path 테스트" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> NGINX+ Ingress Controller - lua_package_path 테스트 </div> </div> </a> <a href=../NPIC%EC%97%90%EC%84%9C-VS-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/ class="md-footer__link md-footer__link--next" aria-label="Next: NGINX+ Ingress Controller - VS Crd로 Lua 사용" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> NGINX+ Ingress Controller - VS Crd로 Lua 사용 </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script> <script src=../../../assets/javascripts/bundle.5a2dcb6a.min.js></script> </body> </html>

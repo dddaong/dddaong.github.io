@@ -1,0 +1,191 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href=https://wiki.ddaong.co.kr/NGINX-Plus/NGINX-Controller/ConfigDB-Manual-Restore/ rel=canonical><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.4.2, mkdocs-material-8.5.10"><title>ConfigDB Manual Restore - DDAONG WIKI</title><link rel=stylesheet href=../../../assets/stylesheets/main.975780f9.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.2505c338.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style><link rel=stylesheet href=../../../stylesheets/extra.css><script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#set-variables class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=../../.. title="DDAONG WIKI" class="md-header__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> DDAONG WIKI </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> ConfigDB Manual Restore </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo aria-label="Embrace the dark side" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Embrace the dark side" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=teal data-md-color-accent=deep-orange aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../.. title="DDAONG WIKI" class="md-nav__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> DDAONG WIKI </label> <div class=md-nav__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../.. class=md-nav__link> DDAONG Docs Archive </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> Docker <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Docker data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Docker </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Docker/Private-container-Local-Registry/ class=md-nav__link> Docker - Private(Local) Container Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3> F5 BIG IP <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="F5 BIG IP" data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> F5 BIG IP </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/00-F5-HW-SW-Support-Policy/ class=md-nav__link> F5 Hardware / Software Support Policy </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_2 type=checkbox id=__nav_3_2> <label class=md-nav__link for=__nav_3_2> BIG IP CIS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP CIS" data-md-level=2> <label class=md-nav__title for=__nav_3_2> <span class="md-nav__icon md-icon"></span> BIG IP CIS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-01-Calico/ class=md-nav__link> F5 BIG-IP CIS 소개 </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-02-Calico%2BClusterip/ class=md-nav__link> F5 BIG-IP CIS - Calico+ClusterIP 모드 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_3 type=checkbox id=__nav_3_3> <label class=md-nav__link for=__nav_3_3> BIG IP TS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP TS" data-md-level=2> <label class=md-nav__title for=__nav_3_3> <span class="md-nav__icon md-icon"></span> BIG IP TS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-TS/f5-ts-monitoring-prometheus-grafana/ class=md-nav__link> F5 Telemetry Streaming with Prometheus & Grafana Test </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_4 type=checkbox id=__nav_3_4> <label class=md-nav__link for=__nav_3_4> BIG IP 일반 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP 일반" data-md-level=2> <label class=md-nav__title for=__nav_3_4> <span class="md-nav__icon md-icon"></span> BIG IP 일반 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/BIG-IP-SYSLOG-Config-Sample/ class=md-nav__link> BIG-IP - Syslog Custom Config Sample </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/F5-BIG-IP-SNMP-OID/ class=md-nav__link> F5 BIG-IP - SNMP OID </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> K3s <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=K3s data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> K3s </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../K3s/00-Lightweight-Kubernetes-compare/ class=md-nav__link> Overview Lightweight Kubernetes </a> </li> <li class=md-nav__item> <a href=../../../K3s/01-K3S-Installation/ class=md-nav__link> K3S Installation for SingleNode Cluster Guide </a> </li> <li class=md-nav__item> <a href=../../../K3s/UsePrivateRegistryAsKubeService-in-K3S/ class=md-nav__link> K3s Installation with Private Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> Kubernetes <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Kubernetes data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> Kubernetes </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Kubernetes/Kube-kubeadm-install/ class=md-nav__link> K8s Installation script for Centos7 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6 checked> <label class=md-nav__link for=__nav_6> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus-Product-Install-guide/ class=md-nav__link> NGINX Product Install Guides </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_2 type=checkbox id=__nav_6_2 checked> <label class=md-nav__link for=__nav_6_2> NGINX Controller <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Controller" data-md-level=2> <label class=md-nav__title for=__nav_6_2> <span class="md-nav__icon md-icon"></span> NGINX Controller </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../API-GW-Image-build-NAP/ class=md-nav__link> NGINX Controller - NAP Container Image build </a> </li> <li class=md-nav__item> <a href=../Arcadia-and-NGINX-Controller-Configuration-Hands-on/ class=md-nav__link> Arcadia and NGINX Controller Configuration </a> </li> <li class=md-nav__item> <a href=../Build-NGINX-Plus-API-GW-container-image/ class=md-nav__link> NGINX Controller - NGINX Plus Container Image build </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> ConfigDB Manual Restore <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> ConfigDB Manual Restore </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#set-variables class=md-nav__link> Set Variables </a> </li> <li class=md-nav__item> <a href=#authentication class=md-nav__link> Authentication </a> </li> <li class=md-nav__item> <a href=#test-configs-post-api-requests-from-kma-lg-cns class=md-nav__link> TEST Configs POST API requests from KMA - LG CNS </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../NGINX-Controller-Alert-%EB%A9%94%EC%9D%BC-%EC%84%A4%EC%A0%95/ class=md-nav__link> NGINX Controller - Alert 메일 설정 </a> </li> <li class=md-nav__item> <a href=../NGINX-Controller-Deployment-Guide/ class=md-nav__link> NGINX Controller Deployment Guide </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_3 type=checkbox id=__nav_6_3> <label class=md-nav__link for=__nav_6_3> NGINX Ingress Ctlr <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Ingress Ctlr" data-md-level=2> <label class=md-nav__title for=__nav_6_3> <span class="md-nav__icon md-icon"></span> NGINX Ingress Ctlr </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/Helm-Chart%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-NPIC-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - Helm Chart 배포 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - lua_package_path 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NGINX-Plus-Ingress-Controller%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - JWT 인증 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NPIC%EC%97%90%EC%84%9C-VS-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - VS Crd로 Lua 사용 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_4 type=checkbox id=__nav_6_4> <label class=md-nav__link for=__nav_6_4> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=2> <label class=md-nav__title for=__nav_6_4> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ - JWT 인증 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-NAP-WAF-DoS-Install-Guide/ class=md-nav__link> NGINX Plus NAP WAF DoS Install Guide </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_7 type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7> Protocols <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Protocols data-md-level=1> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Protocols </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Protocols/Bash-Script%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-JWT-JWK-JWKS-%EC%83%9D%EC%84%B1/ class=md-nav__link> JWT - Bash Script를 사용한 JWT, JWK, JWKS 생성 </a> </li> <li class=md-nav__item> <a href=../../../Protocols/JWT%EC%9D%98%EC%9D%B4%ED%95%B4-NGINX%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D/ class=md-nav__link> JWT - JWT Concept </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_8 type=checkbox id=__nav_8> <label class=md-nav__link for=__nav_8> Tools <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Tools data-md-level=1> <label class=md-nav__title for=__nav_8> <span class="md-nav__icon md-icon"></span> Tools </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Tools/IP-Changer-Batch-Script/ class=md-nav__link> Windows IP Changer Batch Script </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#set-variables class=md-nav__link> Set Variables </a> </li> <li class=md-nav__item> <a href=#authentication class=md-nav__link> Authentication </a> </li> <li class=md-nav__item> <a href=#test-configs-post-api-requests-from-kma-lg-cns class=md-nav__link> TEST Configs POST API requests from KMA - LG CNS </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/dddaong/dddaong.github.io/edit/master/docs/NGINX-Plus/NGINX-Controller/ConfigDB-Manual-Restore.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1>ConfigDB Manual Restore</h1> <h3 id=set-variables>Set Variables<a class=headerlink href=#set-variables title="Permanent link">&para;</a></h3> <pre><code class=language-bash>CTLRFQDN='nctest.itian.ml'
+CTLRAUTHCOOKIE='/var/tmp/cookie.txt'
+CTLRAUTHUSER='admin@nginx.com'
+CTLRAUTHPASS='1234qwer'
+</code></pre> <h3 id=authentication>Authentication<a class=headerlink href=#authentication title="Permanent link">&para;</a></h3> <pre><code class=language-bash># Client Authentication
+curl -sk -c ${CTLRAUTHCOOKIE} -X POST --url &quot;https://${CTLRFQDN}/api/v1/platform/login&quot; \
+    --header 'Content-Type: application/json' \
+    --data '{&quot;credentials&quot;: {&quot;type&quot;: &quot;BASIC&quot;,&quot;username&quot;: &quot;'&quot;${CTLRAUTHUSER}&quot;'&quot;,&quot;password&quot;: &quot;'&quot;${CTLRAUTHPASS}&quot;'&quot;}}'
+
+# Controller Authentication Check
+curl -sk -b ${CTLRAUTHCOOKIE} -c ${CTLRAUTHCOOKIE} \
+-X GET --url &quot;https://${CTLRFQDN}/api/v1/platform/login&quot; | jq
+</code></pre> <h3 id=test-configs-post-api-requests-from-kma-lg-cns>TEST Configs POST API requests from KMA - LG CNS<a class=headerlink href=#test-configs-post-api-requests-from-kma-lg-cns title="Permanent link">&para;</a></h3> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/services/environments/hq-env&quot; \
+    --header 'Content-Type: application/json' \
+    --data '{
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;hq-env&quot;,
+    &quot;displayName&quot;: &quot;&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;tags&quot;: []
+  },
+  &quot;desiredState&quot;: {}
+}'
+</code></pre> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/services/environments/hq-env/gateways/hq-gw&quot; \
+--header 'Content-Type: application/json' \
+--data '{
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;hq-gw&quot;,
+    &quot;tags&quot;: []
+  },
+  &quot;desiredState&quot;: {
+    &quot;ingress&quot;: {
+      &quot;uris&quot;: {
+        &quot;http://apigw.comis5.kma.go.kr&quot;: {}
+      },
+      &quot;placement&quot;: {
+        &quot;instanceRefs&quot;: [
+          {
+            &quot;ref&quot;: &quot;/infrastructure/locations/unspecified/instances/nginxgw-21-8vxcf&quot;
+          },
+          {
+            &quot;ref&quot;: &quot;/infrastructure/locations/unspecified/instances/nginxgw-21-frqh6&quot;
+          }
+        ]
+      }
+    }
+  }
+}'
+</code></pre> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/services/environments/hq-env/apps/aws-capi&quot; \
+--header 'Content-Type: application/json' \
+--data '{
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;aws-capi&quot;,
+    &quot;displayName&quot;: &quot;&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;tags&quot;: []
+  },
+  &quot;desiredState&quot;: {}
+}'
+</code></pre> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/services/environments/hq-env/apps/aws-capi/components/api.cgi-bin.aws3.nph-aws3_ana1&quot; \
+--header 'Content-Type: application/json' \
+--data '{
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;api.cgi-bin.aws3.nph-aws3_ana1&quot;,
+    &quot;tags&quot;: []
+  },
+  &quot;desiredState&quot;: {
+    &quot;ingress&quot;: {
+      &quot;gatewayRefs&quot;: [
+        {
+          &quot;ref&quot;: &quot;/services/environments/hq-env/gateways/hq-gw&quot;
+        }
+      ],
+      &quot;uris&quot;: {
+        &quot;/capi/cgi-bin/aws3/nph-aws3_ana1&quot;: {
+          &quot;matchMethod&quot;: &quot;PREFIX&quot;
+        }
+      }
+    },
+    &quot;backend&quot;: {
+      &quot;ntlmAuthentication&quot;: &quot;DISABLED&quot;,
+      &quot;preserveHostHeader&quot;: &quot;DISABLED&quot;,
+      &quot;workloadGroups&quot;: {
+        &quot;aws-capi-wg&quot;: {
+          &quot;loadBalancingMethod&quot;: {
+            &quot;type&quot;: &quot;ROUND_ROBIN&quot;
+          },
+          &quot;uris&quot;: {
+            &quot;http://aws-capi:8090&quot;: {
+              &quot;isBackup&quot;: false,
+              &quot;isDown&quot;: false,
+              &quot;isDrain&quot;: false
+            }
+          }
+        }
+      }
+    },
+    &quot;logging&quot;: {
+      &quot;errorLog&quot;: &quot;DISABLED&quot;,
+      &quot;accessLog&quot;: {
+        &quot;state&quot;: &quot;DISABLED&quot;
+      }
+    },
+    &quot;publishedApiRefs&quot;: [
+      {
+        &quot;links&quot;: {
+          &quot;rel&quot;: &quot;&quot;
+        },
+        &quot;ref&quot;: &quot;/services/environments/hq-env/apps/aws-capi/published-apis/api.cgi-bin.aws3.nph-aws3_ana1&quot;
+      }
+    ],
+    &quot;security&quot;: {
+      &quot;identityProviderRefs&quot;: []
+    }
+  }
+}'
+</code></pre> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/security/identity-providers/url_api&quot; \
+--header 'Content-Type: application/json' \
+--data '{
+  &quot;metadata&quot;: {
+    &quot;name&quot;: &quot;url_api&quot;,
+    &quot;tags&quot;: []
+  },
+  &quot;desiredState&quot;: {
+    &quot;environmentRefs&quot;: [
+      {
+        &quot;ref&quot;: &quot;/services/environments/hq-afso-env&quot;
+      }
+    ],
+    &quot;identityProvider&quot;: {
+      &quot;type&quot;: &quot;API_KEY&quot;
+    }
+  }
+}'
+</code></pre> <pre><code class=language-bash>curl -sk -c ${CTLRAUTHCOOKIE} -X PUT \
+--url &quot;https://${CTLRFQDN}/api/v1/security/identity-providers/url_api/clients&quot; \
+--header 'Content-Type: application/json' \
+--data '{
+  &quot;items&quot;: [
+    {
+      &quot;metadata&quot;: {
+        &quot;name&quot;: &quot;afsu00000042&quot;
+      },
+      &quot;desiredState&quot;: {
+        &quot;credential&quot;: {
+          &quot;apiKey&quot;: &quot;4cd9d2c1f739c5e2b3204fa56579377a95f81ac2aaf18d8bd5f47c8e414fcf8d9642574c2d64dcb3c9511d553e668ad3292a68e3e76e4b597f5bb9a0ee929bf8&quot;,
+          &quot;type&quot;: &quot;API_KEY&quot;
+        }
+      }
+    },
+    {
+      &quot;metadata&quot;: {
+        &quot;name&quot;: &quot;afsu00000046&quot;
+      },
+      &quot;desiredState&quot;: {
+        &quot;credential&quot;: {
+          &quot;apiKey&quot;: &quot;42c832cfd1a4098d1155bbc8262d6841f8085d7dbc0e2c08db9ad35541be96d187b894b0ac32373a484734f530a039552a5055b9730ce27fbd819b5522446de2&quot;,
+          &quot;type&quot;: &quot;API_KEY&quot;
+        }
+      }
+    },
+    {
+      &quot;metadata&quot;: {
+        &quot;name&quot;: &quot;afsu00000047&quot;
+      },
+      &quot;desiredState&quot;: {
+        &quot;credential&quot;: {
+          &quot;apiKey&quot;: &quot;7318c7026f474149282469a395622716e128f0ca5d84e9a689ecd4347d1131cb26c1e41a12d1c153235c61c4715c013972b9d1b5ee1a210ae27c2584ef0342c3&quot;,
+          &quot;type&quot;: &quot;API_KEY&quot;
+        }
+      }
+    },
+    {
+      &quot;metadata&quot;: {
+        &quot;name&quot;: &quot;test&quot;
+      },
+      &quot;desiredState&quot;: {
+        &quot;credential&quot;: {
+          &quot;apiKey&quot;: &quot;9d2c1f739c5e2b3204fa50bbc82626f4741492824684e9a62c08db9ad35541be96d187b894b0ac32373a484734f530a039552a5055b9730ce27fbd819b5522446de2o5o345f3434cr3434gh45gv34554&quot;,
+          &quot;type&quot;: &quot;API_KEY&quot;
+        }
+      }
+    }
+  ]
+}'
+</code></pre> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../Build-NGINX-Plus-API-GW-container-image/ class="md-footer__link md-footer__link--prev" aria-label="Previous: NGINX Controller - NGINX Plus Container Image build" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> NGINX Controller - NGINX Plus Container Image build </div> </div> </a> <a href=../NGINX-Controller-Alert-%EB%A9%94%EC%9D%BC-%EC%84%A4%EC%A0%95/ class="md-footer__link md-footer__link--next" aria-label="Next: NGINX Controller - Alert 메일 설정" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> NGINX Controller - Alert 메일 설정 </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script> <script src=../../../assets/javascripts/bundle.5a2dcb6a.min.js></script> </body> </html>

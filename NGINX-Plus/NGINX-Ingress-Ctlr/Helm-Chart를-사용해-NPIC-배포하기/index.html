@@ -1,0 +1,215 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content=DDAONG><link href=https://wiki.ddaong.co.kr/NGINX-Plus/NGINX-Ingress-Ctlr/Helm-Chart%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-NPIC-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0/ rel=canonical><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.4.2, mkdocs-material-8.5.10"><title>NGINX+ Ingress Controller - Helm Chart 배포 - DDAONG WIKI</title><link rel=stylesheet href=../../../assets/stylesheets/main.975780f9.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.2505c338.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style><link rel=stylesheet href=../../../stylesheets/extra.css><script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#helm-nginx-plus-ingress-controller class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=../../.. title="DDAONG WIKI" class="md-header__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> DDAONG WIKI </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> NGINX+ Ingress Controller - Helm Chart 배포 </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo aria-label="Embrace the dark side" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Embrace the dark side" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=teal data-md-color-accent=deep-orange aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../.. title="DDAONG WIKI" class="md-nav__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> DDAONG WIKI </label> <div class=md-nav__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../.. class=md-nav__link> DDAONG Docs Archive </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> Docker <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Docker data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Docker </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Docker/Private-container-Local-Registry/ class=md-nav__link> Docker - Private(Local) Container Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3> F5 BIG IP <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="F5 BIG IP" data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> F5 BIG IP </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/00-F5-HW-SW-Support-Policy/ class=md-nav__link> F5 Hardware / Software Support Policy </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_2 type=checkbox id=__nav_3_2> <label class=md-nav__link for=__nav_3_2> BIG IP CIS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP CIS" data-md-level=2> <label class=md-nav__title for=__nav_3_2> <span class="md-nav__icon md-icon"></span> BIG IP CIS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-01-Calico/ class=md-nav__link> F5 BIG-IP CIS 소개 </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-02-Calico%2BClusterip/ class=md-nav__link> F5 BIG-IP CIS - Calico+ClusterIP 모드 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_3 type=checkbox id=__nav_3_3> <label class=md-nav__link for=__nav_3_3> BIG IP TS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP TS" data-md-level=2> <label class=md-nav__title for=__nav_3_3> <span class="md-nav__icon md-icon"></span> BIG IP TS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-TS/f5-ts-monitoring-prometheus-grafana/ class=md-nav__link> F5 Telemetry Streaming with Prometheus & Grafana Test </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_4 type=checkbox id=__nav_3_4> <label class=md-nav__link for=__nav_3_4> BIG IP 일반 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP 일반" data-md-level=2> <label class=md-nav__title for=__nav_3_4> <span class="md-nav__icon md-icon"></span> BIG IP 일반 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/BIG-IP-SYSLOG-Config-Sample/ class=md-nav__link> BIG-IP - Syslog Custom Config Sample </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/F5-BIG-IP-SNMP-OID/ class=md-nav__link> F5 BIG-IP - SNMP OID </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> K3s <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=K3s data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> K3s </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../K3s/00-Lightweight-Kubernetes-compare/ class=md-nav__link> Overview Lightweight Kubernetes </a> </li> <li class=md-nav__item> <a href=../../../K3s/01-K3S-Installation/ class=md-nav__link> K3S Installation for SingleNode Cluster Guide </a> </li> <li class=md-nav__item> <a href=../../../K3s/UsePrivateRegistryAsKubeService-in-K3S/ class=md-nav__link> K3s Installation with Private Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> Kubernetes <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Kubernetes data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> Kubernetes </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Kubernetes/Kube-kubeadm-install/ class=md-nav__link> K8s Installation script for Centos7 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6 checked> <label class=md-nav__link for=__nav_6> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus-Product-Install-guide/ class=md-nav__link> NGINX Product Install Guides </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_2 type=checkbox id=__nav_6_2> <label class=md-nav__link for=__nav_6_2> NGINX Controller <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Controller" data-md-level=2> <label class=md-nav__title for=__nav_6_2> <span class="md-nav__icon md-icon"></span> NGINX Controller </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Controller/API-GW-Image-build-NAP/ class=md-nav__link> NGINX Controller - NAP Container Image build </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/Arcadia-and-NGINX-Controller-Configuration-Hands-on/ class=md-nav__link> Arcadia and NGINX Controller Configuration </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/Build-NGINX-Plus-API-GW-container-image/ class=md-nav__link> NGINX Controller - NGINX Plus Container Image build </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/ConfigDB-Manual-Restore/ class=md-nav__link> ConfigDB Manual Restore </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/NGINX-Controller-Alert-%EB%A9%94%EC%9D%BC-%EC%84%A4%EC%A0%95/ class=md-nav__link> NGINX Controller - Alert 메일 설정 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Controller/NGINX-Controller-Deployment-Guide/ class=md-nav__link> NGINX Controller Deployment Guide </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_3 type=checkbox id=__nav_6_3 checked> <label class=md-nav__link for=__nav_6_3> NGINX Ingress Ctlr <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Ingress Ctlr" data-md-level=2> <label class=md-nav__title for=__nav_6_3> <span class="md-nav__icon md-icon"></span> NGINX Ingress Ctlr </label> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> NGINX+ Ingress Controller - Helm Chart 배포 <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> NGINX+ Ingress Controller - Helm Chart 배포 </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#helm-nginx-plus-ingress-controller class=md-nav__link> Helm 차트를 사용해 NGINX Plus Ingress Controller 배포 </a> <nav class=md-nav aria-label="Helm 차트를 사용해 NGINX Plus Ingress Controller 배포"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-helm-git class=md-nav__link> 1. Helm / git 설치 </a> </li> <li class=md-nav__item> <a href=#2-nginx-plus-ingress-controller class=md-nav__link> 2. NGINX Plus Ingress Controller 이미지 생성 </a> </li> <li class=md-nav__item> <a href=#3-nginx-kubernetes-ingress class=md-nav__link> 3. NGINX+ 라이선스를 Kubernetes-ingress 디렉토리에 복사하고, 이미지 빌드를 시작합니다 </a> </li> <li class=md-nav__item> <a href=#4-image-repository class=md-nav__link> 4. 테스트 환경에 Image repository가 없으므로 수동으로 노드에 이미지를 로드해줍니다 </a> </li> <li class=md-nav__item> <a href=#5-1-npic class=md-nav__link> 5-1. 기존 NPIC 에 새로 빌드한 이미지 적용 </a> </li> <li class=md-nav__item> <a href=#5-2-helm-kubernetes-npic class=md-nav__link> 5-2. Helm을 사용해 Kubernetes에 NPIC 설치 </a> </li> <li class=md-nav__item> <a href=#6-lua-configmap class=md-nav__link> 6. Lua 사용을 위한 configmap을 수정 </a> </li> <li class=md-nav__item> <a href=#7-lua class=md-nav__link> 7. 테스트를 위한 웹서버 및 Lua 서버 블록 설정 </a> </li> <li class=md-nav__item> <a href=#8-ingress class=md-nav__link> 8. 각 서비스에 대한 Ingress 작성 및 테스트 </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - lua_package_path 테스트 </a> </li> <li class=md-nav__item> <a href=../NGINX-Plus-Ingress-Controller%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - JWT 인증 </a> </li> <li class=md-nav__item> <a href=../NPIC%EC%97%90%EC%84%9C-VS-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - VS Crd로 Lua 사용 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_4 type=checkbox id=__nav_6_4> <label class=md-nav__link for=__nav_6_4> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=2> <label class=md-nav__title for=__nav_6_4> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ - JWT 인증 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-NAP-WAF-DoS-Install-Guide/ class=md-nav__link> NGINX Plus NAP WAF DoS Install Guide </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_7 type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7> Protocols <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Protocols data-md-level=1> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Protocols </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Protocols/Bash-Script%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-JWT-JWK-JWKS-%EC%83%9D%EC%84%B1/ class=md-nav__link> JWT - Bash Script를 사용한 JWT, JWK, JWKS 생성 </a> </li> <li class=md-nav__item> <a href=../../../Protocols/JWT%EC%9D%98%EC%9D%B4%ED%95%B4-NGINX%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D/ class=md-nav__link> JWT - JWT Concept </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_8 type=checkbox id=__nav_8> <label class=md-nav__link for=__nav_8> Tools <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Tools data-md-level=1> <label class=md-nav__title for=__nav_8> <span class="md-nav__icon md-icon"></span> Tools </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Tools/IP-Changer-Batch-Script/ class=md-nav__link> Windows IP Changer Batch Script </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#helm-nginx-plus-ingress-controller class=md-nav__link> Helm 차트를 사용해 NGINX Plus Ingress Controller 배포 </a> <nav class=md-nav aria-label="Helm 차트를 사용해 NGINX Plus Ingress Controller 배포"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#1-helm-git class=md-nav__link> 1. Helm / git 설치 </a> </li> <li class=md-nav__item> <a href=#2-nginx-plus-ingress-controller class=md-nav__link> 2. NGINX Plus Ingress Controller 이미지 생성 </a> </li> <li class=md-nav__item> <a href=#3-nginx-kubernetes-ingress class=md-nav__link> 3. NGINX+ 라이선스를 Kubernetes-ingress 디렉토리에 복사하고, 이미지 빌드를 시작합니다 </a> </li> <li class=md-nav__item> <a href=#4-image-repository class=md-nav__link> 4. 테스트 환경에 Image repository가 없으므로 수동으로 노드에 이미지를 로드해줍니다 </a> </li> <li class=md-nav__item> <a href=#5-1-npic class=md-nav__link> 5-1. 기존 NPIC 에 새로 빌드한 이미지 적용 </a> </li> <li class=md-nav__item> <a href=#5-2-helm-kubernetes-npic class=md-nav__link> 5-2. Helm을 사용해 Kubernetes에 NPIC 설치 </a> </li> <li class=md-nav__item> <a href=#6-lua-configmap class=md-nav__link> 6. Lua 사용을 위한 configmap을 수정 </a> </li> <li class=md-nav__item> <a href=#7-lua class=md-nav__link> 7. 테스트를 위한 웹서버 및 Lua 서버 블록 설정 </a> </li> <li class=md-nav__item> <a href=#8-ingress class=md-nav__link> 8. 각 서비스에 대한 Ingress 작성 및 테스트 </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/dddaong/dddaong.github.io/edit/master/docs/NGINX-Plus/NGINX-Ingress-Ctlr/Helm-Chart를-사용해-NPIC-배포하기.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1>NGINX+ Ingress Controller - Helm Chart 배포</h1> <p>Helm 차트를 사용해 NGINX Plus Ingress Controller 배포 테스트</p> <h2 id=helm-nginx-plus-ingress-controller>Helm 차트를 사용해 NGINX Plus Ingress Controller 배포<a class=headerlink href=#helm-nginx-plus-ingress-controller title="Permanent link">&para;</a></h2> <p>NGINX Plus Ingress Controller (NPIC)의 이미지 빌드에는 Docker, git, GNU Make, OpenSSL, 그리고 NGINX-Plus 라이선스가 필요합니다.</p> <h4 id=1-helm-git>1. Helm / git 설치<a class=headerlink href=#1-helm-git title="Permanent link">&para;</a></h4> <p>Helm은 Kubernetes에서 리눅스의 YUM rpm, APT dpkg 같이 패키지를 관리해주는 역할을 수행합니다. Helm의 패키지를 Chart라고 합니다.</p> <p>Helm 3.5.3을 다운로드 해 압축을 풀어주고, 그 PATH 경로(/usr/local/sbin)으로 이동합니다.</p> <pre><code class=language-bash>curl -L https://get.helm.sh/helm-v3.5.3-linux-amd64.tar.gz | tar zxf -
+mv linux-amd64/helm /usr/local/sbin
+</code></pre> <p>git 도 설치해주겠습니다.</p> <pre><code class=language-bash>yum -y install git
+</code></pre> <h4 id=2-nginx-plus-ingress-controller>2. NGINX Plus Ingress Controller 이미지 생성<a class=headerlink href=#2-nginx-plus-ingress-controller title="Permanent link">&para;</a></h4> <ul> <li>이 부분은 <a href=https://dddaong.github.io/nginx-ingress-controller/lua/2021/03/24/NPIC-NDK-Lua-%EB%AA%A8%EB%93%88-%ED%85%8C%EC%8A%A4%ED%8A%B8.html>NPIC + NDK + Lua 모듈 테스트</a>의 과정과 유사합니다. (3월31일 1.11.0버전이 릴리즈되어 1.11.0 버전을 사용합니다.)</li> </ul> <pre><code class=language-bash>mkdir -p /var/tmp/npic &amp;&amp; cd /var/tmp/npic
+git clone https://github.com/nginxinc/kubernetes-ingress/
+cd kubernetes-ingress
+git chechout v1.11.0
+</code></pre> <ul> <li>기존 Dockerfile 백업 v1.11.0에서는 Dockerfile이 변경된 것으로 보입니다.</li> <li>v1.10.0과 달리 App protect for Plus가 별도로 제공되지 않습니다.</li> </ul> <pre><code class=language-bash>cp /var/tmp/npic/kubernetes-ingress/build/Dockerfile \
+/var/tmp/npic/kubernetes-ingress/build/Dockerfile.bak
+</code></pre> <ul> <li>기존 Dockerfile 수정</li> </ul> <pre><code class=language-bash>vi /var/tmp/npic/kubernetes-ingress/build/Dockerfile
+</code></pre> <ul> <li>yum -y install nginx-plus 커맨드에 아래 패키지를 추가해줍니다.</li> <li>nginx-plus-module-ndk</li> <li>nginx-plus-module-lua</li> <li>nginx-plus-module-cookie-flag</li> <li>nginx-plus-module-encrypted-session</li> <li>nginx-plus-module-headers-more</li> <li>nginx-plus-module-set-misc</li> </ul> <p>추가한 Dockerfile은 아래 형태가 됩니다. (v1.11.0의 Dockerfile 파일의 52번 라인을 수정했습니다.)</p> <pre><code class=language-bash>...[omitted]
+apt-transport-https libcap2-bin nginx-plus=${NGINX_PLUS_VERSION} nginx-plus-module-njs=        ${NGINX_NJS_VERSION} nginx-plus-module-ndk nginx-plus-module-lua nginx-plus-module-cookie-flag nginx-plus-module-encrypted-session nginx-plus-module-headers-more nginx-plus-module-set-misc \
+...[omitted]
+</code></pre> <h4 id=3-nginx-kubernetes-ingress>3. NGINX+ 라이선스를 Kubernetes-ingress 디렉토리에 복사하고, 이미지 빌드를 시작합니다<a class=headerlink href=#3-nginx-kubernetes-ingress title="Permanent link">&para;</a></h4> <ul> <li>NGINX+ 테스트 라이선스를 사용했습니다.</li> </ul> <pre><code class=language-bash>cp /var/tmp/nginx-repo* /var/tmp/npic/kubernetes-ingress/
+</code></pre> <ul> <li>이미지 빌드를 시작합니다. (Dockerfile 변경에 따라 make 명령어도 v1.10.0에 비해 달라졌습니다.)</li> </ul> <pre><code class=language-bash>make debian-image-plus PREFIX=dddaong/nginx-plus-ingress TARGET=container
+</code></pre> <p>~~빌드가 완료되면 Repository에 업로드를 시도하기 때문에 아래 오류 메시지는 무시하셔도 좋습니다.~~ v1.11.0부터는 빌드가 완료되어도 Registry에 업로드를 시도하지 않습니다.</p> <ul> <li>빌드과정이 완료되면 docker에서 이미지를 확인합니다. Tag가 edge로 지정되어 있는 것이 보입니다.</li> </ul> <pre><code class=language-bash>$ docker image ls
+REPOSITORY                           TAG        IMAGE ID       CREATED              SIZE
+dddaong/nginx-plus-ingress           edge       ab47ffdd0e3a   About a minute ago   136MB
+</code></pre> <h4 id=4-image-repository>4. 테스트 환경에 Image repository가 없으므로 수동으로 노드에 이미지를 로드해줍니다<a class=headerlink href=#4-image-repository title="Permanent link">&para;</a></h4> <ul> <li>save docker image</li> </ul> <pre><code class=language-bash>docker save dddaong/nginx-plus-ingress:edge -o /var/tmp/npic/dddaong-npic-edge.tgz
+scp /var/tmp/npic/dddaong-npic-edge.tgz root@&lt;workernode1&gt;:/var/tmp
+scp /var/tmp/npic/dddaong-npic-edge.tgz root@&lt;workernode2&gt;:/var/tmp
+</code></pre> <ul> <li>load docker image @each node</li> </ul> <pre><code class=language-bash>docker load -i /var/tmp/dddaong-npic-edge.tgz
+</code></pre> <h4 id=5-1-npic>5-1. 기존 NPIC 에 새로 빌드한 이미지 적용<a class=headerlink href=#5-1-npic title="Permanent link">&para;</a></h4> <p>Helm 차트를 사용한 NPIC 구축은 5-2에서 수행합니다. 기존에 NPIC를 삭제하기 전에, 새로 빌드한 이미지를 적용하는 테스트를 수행 했습니다.</p> <ul> <li>이번 테스트에서는 kubectl 커맨드로 롤아웃 업데이트를 해보겠습니다.</li> </ul> <pre><code class=language-bash>$ kubectl -n nginx-ingress get deployments.apps
+NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+nginx-ingress   1/1     1            1           13d
+</code></pre> <ul> <li>Deployment 리소스의 Containers에서 항목명을 확인합니다. 이 테스트에서 이미지를 변경할 Container 이름은 nginx-plus-ingress로 확인됩니다.</li> </ul> <pre><code class=language-bash>$ kubectl -n nginx-ingress describe deployments.apps nginx-ingress | grep -A 4 'Container'
+  Containers:
+   nginx-plus-ingress:
+    Image:       samsung/nginxplus-ingress:1.10.1
+    Ports:       80/TCP, 443/TCP, 8081/TCP
+    Host Ports:  0/TCP, 0/TCP, 0/TCP
+</code></pre> <ul> <li>확인한 항목의 이미지를 kubectl 명령어로 변경해줍니다.</li> <li>커맨드 수행시 즉시 Rollout이 진행됩니다!!</li> </ul> <pre><code class=language-bash>$ kubectl -n nginx-ingress set image deployments/nginx-ingress nginx-plus-ingress=dddaong/nginx-plus-ingress:edge
+deployment.apps/nginx-ingress image updated
+</code></pre> <ul> <li>Rollout 결과를 확인합니다.</li> </ul> <pre><code class=language-bash>$ kubectl -n nginx-ingress rollout status deployment nginx-ingress
+deployment &quot;nginx-ingress&quot; successfully rolled out
+</code></pre> <ul> <li>파드와 Deployment 상태를 확인합니다.</li> </ul> <pre><code class=language-bash>$ kubectl -n nginx-ingress get pod
+NAME                             READY   STATUS    RESTARTS   AGE
+nginx-ingress-6ff488c8c8-xtsn8   1/1     Running   0          34s
+</code></pre> <pre><code class=language-bash>$ kubectl -n nginx-ingress describe deployments.apps nginx-ingress | grep -A 4 'Container'
+  Containers:
+   nginx-plus-ingress:
+    Image:       dddaong/nginx-plus-ingress:edge
+    Ports:       80/TCP, 443/TCP, 8081/TCP
+    Host Ports:  0/TCP, 0/TCP, 0/TCP
+</code></pre> <h4 id=5-2-helm-kubernetes-npic>5-2. Helm을 사용해 Kubernetes에 NPIC 설치<a class=headerlink href=#5-2-helm-kubernetes-npic title="Permanent link">&para;</a></h4> <ul> <li>먼저 기존 NPIC를 제거합니다</li> </ul> <pre><code class=language-bash>kubectl delete namespaces nginx-ingress
+kubectl delete ingressclasses nginx
+</code></pre> <ul> <li>helm 차트 리소스가 있는 디렉토리로 들어갑니다.</li> </ul> <pre><code class=language-bash>cd /var/tmp/npic/kubernetes-ingress/deployments/helm-chart
+git checkout v1.11.0
+</code></pre> <ul> <li>values-plus.yaml 파일을 백업한 후, 파일 내 이미지 경로를 수정합니다.</li> </ul> <pre><code class=language-bash>cp values-plus.yaml values-plus.yaml.bak
+vi values-plus.yaml
+</code></pre> <pre><code>controller:
+  nginxplus: true
+  image:
+    repository: &lt;NPIC Repository/image name&gt;
+    tag: &quot;edge&quot;
+</code></pre> <p>이 테스트의 경우, dddaong/nginx-plus-ingress로 작성했습니다.</p> <ul> <li>helm을 사용해 인스톨을 수행합니다.</li> </ul> <pre><code class=language-bash>helm install dddaong -f values-plus.yaml .
+</code></pre> <p>"dddaong"은 임의의 릴리즈 명으로서, 원하는 이름을 사용하면 됩니다.</p> <pre><code>W0401 13:28:12.293718   23860 warnings.go:70] networking.k8s.io/v1beta1 IngressClass is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 IngressClassList
+W0401 13:28:12.490643   23860 warnings.go:70] networking.k8s.io/v1beta1 IngressClass is deprecated in v1.19+, unavailable in v1.22+; use networking.k8s.io/v1 IngressClassList
+NAME: dddaong
+LAST DEPLOYED: Thu Apr  1 13:28:11 2021
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+The NGINX Ingress Controller has been installed.
+</code></pre> <ul> <li>Custom Resource Definition들을 설치합니다.</li> </ul> <pre><code class=language-bash>$ kubectl apply -f crds/
+customresourcedefinition.apiextensions.k8s.io/aplogconfs.appprotect.f5.com configured
+customresourcedefinition.apiextensions.k8s.io/appolicies.appprotect.f5.com configured
+customresourcedefinition.apiextensions.k8s.io/apusersigs.appprotect.f5.com configured
+customresourcedefinition.apiextensions.k8s.io/globalconfigurations.k8s.nginx.org configured
+customresourcedefinition.apiextensions.k8s.io/policies.k8s.nginx.org configured
+customresourcedefinition.apiextensions.k8s.io/transportservers.k8s.nginx.org configured
+customresourcedefinition.apiextensions.k8s.io/virtualserverroutes.k8s.nginx.org configured
+customresourcedefinition.apiextensions.k8s.io/virtualservers.k8s.nginx.org configured
+</code></pre> <ul> <li>설치 결과를 확인합니다. helm으로 제공되는 설치 방법은 별도의 nginx-ingress namespace를 생성하지 않고, default namespace에 설치됩니다.</li> </ul> <pre><code class=language-bash>$ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   13d
+kube-node-lease   Active   13d
+kube-public       Active   13d
+kube-system       Active   13d
+</code></pre> <pre><code class=language-bash>$ kubectl get pod
+NAME                                     READY   STATUS    RESTARTS   AGE
+dddaong-nginx-ingress-64f6d88767-txgvw   1/1     Running   0          3m46s
+fakeapi-6f89b55d54-4j8vp                 1/1     Running   0          2d16h
+</code></pre> <h4 id=6-lua-configmap>6. Lua 사용을 위한 configmap을 수정<a class=headerlink href=#6-lua-configmap title="Permanent link">&para;</a></h4> <ul> <li>nginx-ingress에서 사용하는 configmap을 확인합니다.</li> </ul> <pre><code class=language-bash>$ kubectl describe pod dddaong-nginx-ingress-64f6d88767-txgvw | grep configmap
+      -nginx-configmaps=$(POD_NAMESPACE)/dddaong-nginx-ingress
+
+
+$ kubectl get cm
+NAME                                    DATA   AGE
+dddaong-nginx-ingress                   0      8m56s
+</code></pre> <ul> <li>configmap 수정합니다.</li> </ul> <pre><code class=language-bash>kubectl edit cm dddaong-nginx-ingress
+</code></pre> <ul> <li>기존 파일 최하단에 아래 내용을 작성해주고 저장합니다.</li> </ul> <pre><code class=language-yaml>data:
+  main-snippets: |
+    load_module modules/ndk_http_module.so;
+    load_module modules/ngx_http_lua_module.so;
+    load_module modules/ngx_stream_lua_module.so;
+    load_module modules/ngx_http_encrypted_session_module.so;
+    load_module modules/ngx_http_set_misc_module.so;
+    load_module modules/ngx_http_cookie_flag_filter_module.so;
+    load_module modules/ngx_http_headers_more_filter_module.so;
+</code></pre> <p>변경된 configmap이 잘 반영되었는지 확인합니다.</p> <pre><code class=language-bash>kubectl exec -it dddaong-nginx-ingress-64f6d88767-txgvw -- cat /etc/nginx/nginx.conf | grep load_module
+load_module modules/ndk_http_module.so;
+load_module modules/ngx_http_lua_module.so;
+load_module modules/ngx_stream_lua_module.so;
+load_module modules/ngx_http_encrypted_session_module.so;
+load_module modules/ngx_http_set_misc_module.so;
+load_module modules/ngx_http_cookie_flag_filter_module.so;
+load_module modules/ngx_http_headers_more_filter_module.so;
+</code></pre> <h4 id=7-lua>7. 테스트를 위한 웹서버 및 Lua 서버 블록 설정<a class=headerlink href=#7-lua title="Permanent link">&para;</a></h4> <ul> <li>NPIC 기본동작 테스트에 사용할 web server Pod와 Service를 생성합니다.</li> </ul> <pre><code class=language-bash>kubectl create deployment web --image=gcr.io/google-samples/hello-app:1.0
+kubectl expose deployment web --type=NodePort --port=8080
+</code></pre> <ul> <li>Lua 테스트를 위한 서버 블록 역시 ingress-controller 파드 내부에 작성해 줍니다.</li> </ul> <pre><code class=language-bash>kubectl exec -it dddaong-nginx-ingress-64f6d88767-txgvw -- bash
+
+echo 'server {
+    server_name hellworld-lua.test;
+    listen 80;
+    location / {
+      default_type text/html;
+      content_by_lua_block {
+        ngx.say(&quot;&lt;p&gt;helllo, world&lt;/p&gt;&quot;)
+      }
+    }
+    }
+' &gt; /etc/nginx/conf.d/lua_test.conf
+
+nginx -s reload
+</code></pre> <ul> <li>테스트 편의를 위해 .spec.externalTrafficPolicy 의 값을 Local에서 Cluster로 변경해 줍니다.</li> </ul> <pre><code class=language-bash>kubectl edit svc dddaong-nginx-ingress
+</code></pre> <pre><code class=language-yaml>... [ommitted]
+spec:
+  clusterIP: 10.101.120.242
+  clusterIPs:
+  - 10.101.120.242
+  externalTrafficPolicy: Cluster
+  ports:
+[ommitted]...
+</code></pre> <ul> <li>curl로 간단하게 웹 서버와 Lua 서버 블록의 파드 및 서비스를 확인합니다.</li> </ul> <pre><code class=language-bash>$ curl [web Pod Cluster IP]:8080
+Hello, world!
+Version: 1.0.0
+Hostname: web-79d88c97d6-gkv29
+
+$ curl [web Svc Cluster IP]:8080
+</code></pre> <pre><code class=language-bash>$ curl [nginx ingress Pod Cluster IP]:8888
+&lt;p&gt;helllo, world&lt;/p&gt;
+
+$ curl [nginx ingress Svc Cluster IP]:8888
+&lt;p&gt;helllo, world&lt;/p&gt;
+</code></pre> <h4 id=8-ingress>8. 각 서비스에 대한 Ingress 작성 및 테스트<a class=headerlink href=#8-ingress title="Permanent link">&para;</a></h4> <p>helloworld.yaml을 아래와 같이 작성 후, Kubernetes Cluster에 적용해 줍니다.</p> <p>(!주의!) Helm 차트로 설치한 NPIC는 Default IngressClass로 설정되어 있지 않기 때문에 Ingress 리소스 생성시 .spec.ingressClassName: nginx을 반드시 지정해주거나 nginx IngressClass를 Default로 지정해줘야 합니다.</p> <pre><code class=language-yaml>apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helloworld-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: helloworld.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web
+                port:
+                  number: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: helloworld-lua-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: helloworld-lua.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dddaong-nginx-ingress
+                port:
+                  number: 8888
+</code></pre> <pre><code class=language-bash>kubectl apply -f helloworld.yaml
+</code></pre> <ul> <li>ingress가 Service와 잘 연결 되었는지 확인합니다.</li> </ul> <pre><code class=language-bash>$ kubectl get ingress
+NAME                     CLASS   HOSTS                 ADDRESS   PORTS   AGE
+helloworld-ingress       nginx   helloworld.test                 80      112m
+helloworld-lua-ingress   nginx   helloworld-lua.test             80      79m
+
+
+$ kubectl describe ingress helloworld-ingress | grep -A4 Rules
+Rules:
+  Host             Path  Backends
+  ----             ----  --------
+  helloworld.test
+                   /   web:8080 (192.168.225.209:8080)
+
+
+$ kubectl describe ingress helloworld-lua-ingress | grep -A4 Rules
+Rules:
+  Host                 Path  Backends
+  ----                 ----  --------
+  helloworld-lua.test
+                       /   dddaong-nginx-ingress:8888 (192.168.225.208:8888)
+</code></pre> <p>backends 항목에 Service 리소스의 Cluster IP가 확인된다면 잘 연결된 것입니다.</p> <ul> <li>테스트 수행 및 결과 아래와 같이 Hostname Base Route가 잘 동작하는 것을 확인할 수 있습니다.</li> </ul> <pre><code class=language-bash>$ curl -H Host:helloworld.test &lt;k8s node IP:nodePort&gt;
+Hello, world!
+Version: 1.0.0
+Hostname: web-79d88c97d6-gkv29
+
+$ curl -H Host:helloworld-lua.test &lt;k8s node IP:nodePort&gt;
+&lt;p&gt;helllo, world&lt;/p&gt;
+</code></pre> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../../NGINX-Controller/NGINX-Controller-Deployment-Guide/ class="md-footer__link md-footer__link--prev" aria-label="Previous: NGINX Controller Deployment Guide" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> NGINX Controller Deployment Guide </div> </div> </a> <a href=../NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class="md-footer__link md-footer__link--next" aria-label="Next: NGINX+ Ingress Controller - lua_package_path 테스트" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> NGINX+ Ingress Controller - lua_package_path 테스트 </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script> <script src=../../../assets/javascripts/bundle.5a2dcb6a.min.js></script> </body> </html>

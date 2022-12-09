@@ -1,0 +1,231 @@
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href=https://wiki.ddaong.co.kr/NGINX-Plus/NGINX-Controller/Build-NGINX-Plus-API-GW-container-image/ rel=canonical><link rel=icon href=../../../assets/images/favicon.png><meta name=generator content="mkdocs-1.4.2, mkdocs-material-8.5.10"><title>NGINX Controller - NGINX Plus Container Image build - DDAONG WIKI</title><link rel=stylesheet href=../../../assets/stylesheets/main.975780f9.min.css><link rel=stylesheet href=../../../assets/stylesheets/palette.2505c338.min.css><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Ubuntu:300,300i,400,400i,700,700i%7CUbuntu+Mono:400,400i,700,700i&display=fallback"><style>:root{--md-text-font:"Ubuntu";--md-code-font:"Ubuntu Mono"}</style><link rel=stylesheet href=../../../stylesheets/extra.css><script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script></head> <body dir=ltr data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo> <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <div data-md-component=skip> <a href=#nginx-controller-enabled-nginx-plus-container-image-build class=md-skip> Skip to content </a> </div> <div data-md-component=announce> </div> <header class=md-header data-md-component=header> <nav class="md-header__inner md-grid" aria-label=Header> <a href=../../.. title="DDAONG WIKI" class="md-header__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> <label class="md-header__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg> </label> <div class=md-header__title data-md-component=header-title> <div class=md-header__ellipsis> <div class=md-header__topic> <span class=md-ellipsis> DDAONG WIKI </span> </div> <div class=md-header__topic data-md-component=header-topic> <span class=md-ellipsis> NGINX Controller - NGINX Plus Container Image build </span> </div> </div> </div> <form class=md-header__option data-md-component=palette> <input class=md-option data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme=light data-md-color-primary=blue-grey data-md-color-accent=indigo aria-label="Embrace the dark side" type=radio name=__palette id=__palette_1> <label class="md-header__button md-icon" title="Embrace the dark side" for=__palette_2 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6zm0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4zM7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg> </label> <input class=md-option data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme=slate data-md-color-primary=teal data-md-color-accent=deep-orange aria-label="Switch to light mode" type=radio name=__palette id=__palette_2> <label class="md-header__button md-icon" title="Switch to light mode" for=__palette_1 hidden> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg> </label> </form> <label class="md-header__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=Search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </label> <nav class=md-search__options aria-label=Search> <button type=reset class="md-search__icon md-icon" title=Clear aria-label=Clear tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg> </button> </nav> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Initializing search </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=sidebar data-md-type=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" aria-label=Navigation data-md-level=0> <label class=md-nav__title for=__drawer> <a href=../../.. title="DDAONG WIKI" class="md-nav__button md-logo" aria-label="DDAONG WIKI" data-md-component=logo> <img src=../../../assets/logo.png alt=logo> </a> DDAONG WIKI </label> <div class=md-nav__source> <a href=https://github.com/dddaong/dddaong.github.io title="Go to repository" class=md-source data-md-component=source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><!-- Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../.. class=md-nav__link> DDAONG Docs Archive </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_2 type=checkbox id=__nav_2> <label class=md-nav__link for=__nav_2> Docker <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Docker data-md-level=1> <label class=md-nav__title for=__nav_2> <span class="md-nav__icon md-icon"></span> Docker </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Docker/Private-container-Local-Registry/ class=md-nav__link> Docker - Private(Local) Container Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3 type=checkbox id=__nav_3> <label class=md-nav__link for=__nav_3> F5 BIG IP <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="F5 BIG IP" data-md-level=1> <label class=md-nav__title for=__nav_3> <span class="md-nav__icon md-icon"></span> F5 BIG IP </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/00-F5-HW-SW-Support-Policy/ class=md-nav__link> F5 Hardware / Software Support Policy </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_2 type=checkbox id=__nav_3_2> <label class=md-nav__link for=__nav_3_2> BIG IP CIS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP CIS" data-md-level=2> <label class=md-nav__title for=__nav_3_2> <span class="md-nav__icon md-icon"></span> BIG IP CIS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-01-Calico/ class=md-nav__link> F5 BIG-IP CIS 소개 </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-CIS/BIG-IP-CIS-02-Calico%2BClusterip/ class=md-nav__link> F5 BIG-IP CIS - Calico+ClusterIP 모드 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_3 type=checkbox id=__nav_3_3> <label class=md-nav__link for=__nav_3_3> BIG IP TS <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP TS" data-md-level=2> <label class=md-nav__title for=__nav_3_3> <span class="md-nav__icon md-icon"></span> BIG IP TS </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-TS/f5-ts-monitoring-prometheus-grafana/ class=md-nav__link> F5 Telemetry Streaming with Prometheus & Grafana Test </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_3_4 type=checkbox id=__nav_3_4> <label class=md-nav__link for=__nav_3_4> BIG IP 일반 <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="BIG IP 일반" data-md-level=2> <label class=md-nav__title for=__nav_3_4> <span class="md-nav__icon md-icon"></span> BIG IP 일반 </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/BIG-IP-SYSLOG-Config-Sample/ class=md-nav__link> BIG-IP - Syslog Custom Config Sample </a> </li> <li class=md-nav__item> <a href=../../../F5-BIG-IP/BIG-IP-%EC%9D%BC%EB%B0%98/F5-BIG-IP-SNMP-OID/ class=md-nav__link> F5 BIG-IP - SNMP OID </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_4 type=checkbox id=__nav_4> <label class=md-nav__link for=__nav_4> K3s <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=K3s data-md-level=1> <label class=md-nav__title for=__nav_4> <span class="md-nav__icon md-icon"></span> K3s </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../K3s/00-Lightweight-Kubernetes-compare/ class=md-nav__link> Overview Lightweight Kubernetes </a> </li> <li class=md-nav__item> <a href=../../../K3s/01-K3S-Installation/ class=md-nav__link> K3S Installation for SingleNode Cluster Guide </a> </li> <li class=md-nav__item> <a href=../../../K3s/UsePrivateRegistryAsKubeService-in-K3S/ class=md-nav__link> K3s Installation with Private Registry </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_5 type=checkbox id=__nav_5> <label class=md-nav__link for=__nav_5> Kubernetes <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Kubernetes data-md-level=1> <label class=md-nav__title for=__nav_5> <span class="md-nav__icon md-icon"></span> Kubernetes </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Kubernetes/Kube-kubeadm-install/ class=md-nav__link> K8s Installation script for Centos7 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6 type=checkbox id=__nav_6 checked> <label class=md-nav__link for=__nav_6> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=1> <label class=md-nav__title for=__nav_6> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus-Product-Install-guide/ class=md-nav__link> NGINX Product Install Guides </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_2 type=checkbox id=__nav_6_2 checked> <label class=md-nav__link for=__nav_6_2> NGINX Controller <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Controller" data-md-level=2> <label class=md-nav__title for=__nav_6_2> <span class="md-nav__icon md-icon"></span> NGINX Controller </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../API-GW-Image-build-NAP/ class=md-nav__link> NGINX Controller - NAP Container Image build </a> </li> <li class=md-nav__item> <a href=../Arcadia-and-NGINX-Controller-Configuration-Hands-on/ class=md-nav__link> Arcadia and NGINX Controller Configuration </a> </li> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> NGINX Controller - NGINX Plus Container Image build <span class="md-nav__icon md-icon"></span> </label> <a href=./ class="md-nav__link md-nav__link--active"> NGINX Controller - NGINX Plus Container Image build </a> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#nginx-controller-enabled-nginx-plus-container-image-build class=md-nav__link> NGINX Controller-Enabled NGINX Plus Container Image build </a> <nav class=md-nav aria-label="NGINX Controller-Enabled NGINX Plus Container Image build"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#nginx-plus-controller-agent class=md-nav__link> NGINX Plus Controller-agent 통합 이미지 빌드 </a> <nav class=md-nav aria-label="NGINX Plus Controller-agent 통합 이미지 빌드"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#requirements class=md-nav__link> Requirements </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#docker-build class=md-nav__link> Docker Build </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../ConfigDB-Manual-Restore/ class=md-nav__link> ConfigDB Manual Restore </a> </li> <li class=md-nav__item> <a href=../NGINX-Controller-Alert-%EB%A9%94%EC%9D%BC-%EC%84%A4%EC%A0%95/ class=md-nav__link> NGINX Controller - Alert 메일 설정 </a> </li> <li class=md-nav__item> <a href=../NGINX-Controller-Deployment-Guide/ class=md-nav__link> NGINX Controller Deployment Guide </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_3 type=checkbox id=__nav_6_3> <label class=md-nav__link for=__nav_6_3> NGINX Ingress Ctlr <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Ingress Ctlr" data-md-level=2> <label class=md-nav__title for=__nav_6_3> <span class="md-nav__icon md-icon"></span> NGINX Ingress Ctlr </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/Helm-Chart%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%B4-NPIC-%EB%B0%B0%ED%8F%AC%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - Helm Chart 배포 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NGINX-Ingress-Controller-Lua-package-path-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - lua_package_path 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NGINX-Plus-Ingress-Controller%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ Ingress Controller - JWT 인증 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Ingress-Ctlr/NPIC%EC%97%90%EC%84%9C-VS-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0/ class=md-nav__link> NGINX+ Ingress Controller - VS Crd로 Lua 사용 </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_6_4 type=checkbox id=__nav_6_4> <label class=md-nav__link for=__nav_6_4> NGINX Plus <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label="NGINX Plus" data-md-level=2> <label class=md-nav__title for=__nav_6_4> <span class="md-nav__icon md-icon"></span> NGINX Plus </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-JWT-%EC%9D%B8%EC%A6%9D-%ED%85%8C%EC%8A%A4%ED%8A%B8/ class=md-nav__link> NGINX+ - JWT 인증 테스트 </a> </li> <li class=md-nav__item> <a href=../../NGINX-Plus/NGINX-Plus-NAP-WAF-DoS-Install-Guide/ class=md-nav__link> NGINX Plus NAP WAF DoS Install Guide </a> </li> </ul> </nav> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_7 type=checkbox id=__nav_7> <label class=md-nav__link for=__nav_7> Protocols <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Protocols data-md-level=1> <label class=md-nav__title for=__nav_7> <span class="md-nav__icon md-icon"></span> Protocols </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Protocols/Bash-Script%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C-JWT-JWK-JWKS-%EC%83%9D%EC%84%B1/ class=md-nav__link> JWT - Bash Script를 사용한 JWT, JWK, JWKS 생성 </a> </li> <li class=md-nav__item> <a href=../../../Protocols/JWT%EC%9D%98%EC%9D%B4%ED%95%B4-NGINX%EC%9D%98-JWT-%EC%9D%B8%EC%A6%9D/ class=md-nav__link> JWT - JWT Concept </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=__nav_8 type=checkbox id=__nav_8> <label class=md-nav__link for=__nav_8> Tools <span class="md-nav__icon md-icon"></span> </label> <nav class=md-nav aria-label=Tools data-md-level=1> <label class=md-nav__title for=__nav_8> <span class="md-nav__icon md-icon"></span> Tools </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../../Tools/IP-Changer-Batch-Script/ class=md-nav__link> Windows IP Changer Batch Script </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=sidebar data-md-type=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary" aria-label="Table of contents"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"></span> Table of contents </label> <ul class=md-nav__list data-md-component=toc data-md-scrollfix> <li class=md-nav__item> <a href=#nginx-controller-enabled-nginx-plus-container-image-build class=md-nav__link> NGINX Controller-Enabled NGINX Plus Container Image build </a> <nav class=md-nav aria-label="NGINX Controller-Enabled NGINX Plus Container Image build"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#nginx-plus-controller-agent class=md-nav__link> NGINX Plus Controller-agent 통합 이미지 빌드 </a> <nav class=md-nav aria-label="NGINX Plus Controller-agent 통합 이미지 빌드"> <ul class=md-nav__list> <li class=md-nav__item> <a href=#requirements class=md-nav__link> Requirements </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=#docker-build class=md-nav__link> Docker Build </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class=md-content data-md-component=content> <article class="md-content__inner md-typeset"> <a href=https://github.com/dddaong/dddaong.github.io/edit/master/docs/NGINX-Plus/NGINX-Controller/Build-NGINX-Plus-API-GW-container-image.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg> </a> <h1>NGINX Controller - NGINX Plus Container Image build</h1> <h2 id=nginx-controller-enabled-nginx-plus-container-image-build>NGINX Controller-Enabled NGINX Plus Container Image build<a class=headerlink href=#nginx-controller-enabled-nginx-plus-container-image-build title="Permanent link">&para;</a></h2> <p>Kubernetes / Openshift에서 사용할 NGINX Controller 연동 NGINX Plus Instance 의 이미지 빌드 과정을 설명한 문서입니다.</p> <ul> <li>NGINX Controller는 Control-plane으로서, NGINX+ Instance를 Dataplane을 담당하는 API Gateway로서 관리합니다.</li> <li> <p>N+ API Gateway는 실제 트래픽을 처리하는 NGINX Plus와 이 NGINX Plus와 NGINX Controller와 연동을 위한 Controller-agent가 반드시 필요합니다.</p> </li> <li> <p>초기의 API GW 이미지에서는 NGINX Plus를 설치하고, Controller-agent를 Entrypoint 스크립트에서 설치하도록 설계됐었습니다.</p> </li> <li> <p>이 문서에서 소개하는 방법은 업데이트된 방식으로, Controller-agent를 이미지에 통합 설치하여 Image Build를 수행하고, Entrypoint 스크립트에서 사용 환경에 맞도록 Config Update를 수행하도록 되어 있습니다. </p> </li> </ul> <p>이 방법은 Kubernetes 환경의 API GW deploy 과정에서 Controller agent 설치 과정이 생략되어 즉각적인 사용이 가능하며, 혹시 모를 이슈 상황에서 Downtime이 훨씬 줄어드는 결과를 볼 수 있었습니다.</p> <h3 id=nginx-plus-controller-agent>NGINX Plus Controller-agent 통합 이미지 빌드<a class=headerlink href=#nginx-plus-controller-agent title="Permanent link">&para;</a></h3> <h4 id=requirements>Requirements<a class=headerlink href=#requirements title="Permanent link">&para;</a></h4> <ul> <li>NGINX Plus 설치를 위한 NGINX Plus License 파일</li> <li> <p>nginx-repo.crt, nginx-repo.key</p> </li> <li> <p>Docker Image Build를 위한 dockerfile, entrypoint.sh, nginx-plus-api.conf (아래 예시 문서 참조: 예시 문서는 모두 <a href=https://github.com/nginxinc/docker-nginx-controller>NGINX Inc Github</a>에서 가져왔습니다.)</p> </li> <li>Controller-agent 설치를 위한 NGINX Controller</li> </ul> <p><strong>dockerfile</strong></p> <pre><code class=language-dockerfile>FROM debian:stretch-slim
+
+LABEL maintainer=&quot;NGINX Controller Engineering&quot;
+
+# e.g '1234567890'
+ARG API_KEY
+ENV ENV_CONTROLLER_API_KEY=$API_KEY
+
+# e.g https://&lt;fqdn&gt;/install/controller-agent
+ARG CONTROLLER_URL
+ENV ENV_CONTROLLER_URL=$CONTROLLER_URL
+
+# e.g True or False
+ARG STORE_UUID=False
+ENV ENV_CONTROLLER_STORE_UUID=$STORE_UUID
+
+# e.g Instance location already defined in Controller
+ARG LOCATION
+ENV ENV_CONTROLLER_LOCATION=$LOCATION
+
+# e.g Instance group already defined in Controller
+ARG INSTANCE_GROUP
+ENV ENV_CONTROLLER_INSTANCE_GROUP=$INSTANCE_GROUP
+
+# NGXIN Plus release e.g 23
+ARG NGINX_PLUS_VERSION=23
+
+# Download certificate (nginx-repo.crt) and key (nginx-repo.key) from the customer portal (https://cs.nginx.com)
+# and copy to the build context
+COPY nginx-repo.* /etc/ssl/nginx/
+COPY nginx-plus-api.conf /etc/nginx/conf.d/
+COPY entrypoint.sh /
+
+# Install NGINX Plus
+RUN set -ex \
+  &amp;&amp; apt-get update &amp;&amp; apt-get upgrade -y \
+  &amp;&amp; apt-get install --no-install-recommends --no-install-suggests -y curl sudo procps apt-utils apt-transport-https ca-certificates gnupg1 distro-info-data libmpdec2 \
+  lsb-release python python-minimal binutils net-tools \
+  &amp;&amp; \
+  NGINX_GPGKEY=573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62; \
+  found=''; \
+  for server in \
+    ha.pool.sks-keyservers.net \
+    hkp://keyserver.ubuntu.com:80 \
+    hkp://p80.pool.sks-keyservers.net:80 \
+    pgp.mit.edu \
+  ; do \
+    echo &quot;Fetching GPG key $NGINX_GPGKEY from $server&quot;; \
+    apt-key adv --keyserver &quot;$server&quot; --keyserver-options timeout=10 --recv-keys &quot;$NGINX_GPGKEY&quot; &amp;&amp; found=yes &amp;&amp; break; \
+  done; \
+  test -z &quot;$found&quot; &amp;&amp; echo &gt;&amp;2 &quot;error: failed to fetch GPG key $NGINX_GPGKEY&quot; &amp;&amp; exit 1; \
+  echo &quot;Acquire::https::plus-pkgs.nginx.com::Verify-Peer \&quot;true\&quot;;&quot; &gt;&gt; /etc/apt/apt.conf.d/90nginx \
+  &amp;&amp; echo &quot;Acquire::https::plus-pkgs.nginx.com::Verify-Host \&quot;true\&quot;;&quot; &gt;&gt; /etc/apt/apt.conf.d/90nginx \
+  &amp;&amp; echo &quot;Acquire::https::plus-pkgs.nginx.com::SslCert     \&quot;/etc/ssl/nginx/nginx-repo.crt\&quot;;&quot; &gt;&gt; /etc/apt/apt.conf.d/90nginx \
+  &amp;&amp; echo &quot;Acquire::https::plus-pkgs.nginx.com::SslKey      \&quot;/etc/ssl/nginx/nginx-repo.key\&quot;;&quot; &gt;&gt; /etc/apt/apt.conf.d/90nginx \
+  &amp;&amp; printf &quot;deb https://plus-pkgs.nginx.com/debian stretch nginx-plus\n&quot; &gt; /etc/apt/sources.list.d/nginx-plus.list \
+  # NGINX Javascript module needed for APIM
+  &amp;&amp; apt-get update &amp;&amp; apt-get install -y nginx-plus=${NGINX_PLUS_VERSION}* nginx-plus-module-njs=${NGINX_PLUS_VERSION}*  \
+  &amp;&amp; rm -rf /var/lib/apt/lists/* \
+  # Install Controller Agent
+  &amp;&amp; curl -k -sS -L ${CONTROLLER_URL} &gt; install.sh \
+  &amp;&amp; sed -i 's/^assume_yes=&quot;&quot;/assume_yes=&quot;-y&quot;/' install.sh \
+  &amp;&amp; sed -i 's,-n &quot;${NGINX_GPGKEY}&quot;,true,' install.sh \
+  &amp;&amp; sh ./install.sh -y \
+  # cleanup sensitive nginx-plus data
+  &amp;&amp; rm /etc/ssl/nginx/nginx-repo.* \
+  &amp;&amp; rm /etc/apt/sources.list.d/nginx-plus.list \
+  &amp;&amp; rm /etc/apt/apt.conf.d/90nginx \
+  &amp;&amp; apt-key del &quot;$NGINX_GPGKEY&quot;
+
+# Forward request logs to Docker log collector
+RUN ln -sf /proc/1/fd/1 /var/log/nginx-controller/agent.log \
+  &amp;&amp; ln -sf /proc/1/fd/2 /var/log/nginx/error.log
+
+EXPOSE 80
+
+STOPSIGNAL SIGTERM
+
+ENTRYPOINT [&quot;sh&quot;, &quot;/entrypoint.sh&quot;]
+</code></pre> <p>dockerfile를 큰 부분으로 구분하면, dockerfile 구성 순서에 따라 아래와 같이 구분할 수 있습니다.</p> <ol> <li>변수 설정 파트</li> <li>N+ 라이선스 및 Repo 설정 파트</li> <li>NGINX Plus 설치 파트</li> <li>NGINX Controller-agent 설치 파트</li> <li>민감성/불필요 정보 제거 파트</li> <li>Log 연결 및 기타 설정 및 Entrypoint 지정 파트입니다.</li> </ol> <p><strong>entrypoint.sh</strong></p> <pre><code class=language-bash>#!/bin/sh
+#
+# This script launches nginx and the NGINX Controller Agent.
+#
+
+# Variables
+agent_conf_file=&quot;/etc/controller-agent/agent.conf&quot;
+agent_log_file=&quot;/var/log/nginx-controller/agent.log&quot;
+nginx_status_conf=&quot;/etc/nginx/conf.d/stub_status.conf&quot;
+api_key=&quot;&quot;
+instance_name=&quot;$(hostname -f)&quot;
+controller_api_url=&quot;&quot;
+location=&quot;&quot;
+
+handle_term()
+{
+    echo &quot;received TERM signal&quot;
+    echo &quot;stopping controller-agent ...&quot;
+    kill -TERM &quot;${agent_pid}&quot; 2&gt;/dev/null
+    echo &quot;stopping nginx ...&quot;
+    kill -TERM &quot;${nginx_pid}&quot; 2&gt;/dev/null
+}
+
+trap 'handle_term' TERM
+
+# Launch nginx
+echo &quot;starting nginx ...&quot;
+nginx -g &quot;daemon off;&quot; &amp;
+
+nginx_pid=$!
+
+wait_workers()
+{
+    while ! pgrep -f 'nginx: worker process' &gt;/dev/null 2&gt;&amp;1; do
+        echo &quot;waiting for nginx workers ...&quot;
+        sleep 2
+    done
+}
+
+wait_workers
+
+test -n &quot;${ENV_CONTROLLER_API_KEY}&quot; &amp;&amp; \
+    api_key=${ENV_CONTROLLER_API_KEY}
+
+# if instance_name is defined in the env vars, use it
+test -n &quot;${ENV_CONTROLLER_INSTANCE_NAME}&quot; &amp;&amp; \
+    instance_name=${ENV_CONTROLLER_INSTANCE_NAME}
+
+test -n &quot;${ENV_CONTROLLER_API_URL}&quot; &amp;&amp; \
+    controller_api_url=${ENV_CONTROLLER_API_URL}
+
+test -n &quot;${ENV_CONTROLLER_LOCATION}&quot; &amp;&amp; \
+    location=${ENV_CONTROLLER_LOCATION}
+
+test -n &quot;${ENV_CONTROLLER_INSTANCE_GROUP}&quot; &amp;&amp; \
+    instance_group=${ENV_CONTROLLER_INSTANCE_GROUP}
+
+if [ -n &quot;${api_key}&quot; -o -n &quot;${instance_name}&quot; -o -n &quot;${controller_api_url}&quot; -o -n &quot;${location}&quot; -o -n &quot;${instance_group}&quot; ]; then
+    echo &quot;updating ${agent_conf_file} ...&quot;
+
+    if [ ! -f &quot;${agent_conf_file}&quot; ]; then
+ test -f &quot;${agent_conf_file}.default&quot; &amp;&amp; \
+ cp -p &quot;${agent_conf_file}.default&quot; &quot;${agent_conf_file}&quot; || \
+ { echo &quot;no ${agent_conf_file}.default found! exiting.&quot;; exit 1; }
+    fi
+
+    test -n &quot;${api_key}&quot; &amp;&amp; \
+    echo &quot; ---&gt; using api_key = ${api_key}&quot; &amp;&amp; \
+    sh -c &quot;sed -i.old -e 's/api_key.*$/api_key = $api_key/' \
+ ${agent_conf_file}&quot;
+
+    test -n &quot;${controller_api_url}&quot; &amp;&amp; \
+    echo &quot; ---&gt; using controller api url = ${controller_api_url}&quot; &amp;&amp; \
+    sh -c &quot;sed -i.old -e 's@^api_url.*@api_url = $controller_api_url@' \
+ ${agent_conf_file}&quot;
+
+    test -n &quot;${instance_name}&quot; &amp;&amp; \
+    echo &quot; ---&gt; using instance_name = ${instance_name}&quot; &amp;&amp; \
+    sh -c &quot;sed -i.old -e 's/instance_name.*$/instance_name = $instance_name/' \
+ ${agent_conf_file}&quot;
+
+    test -n &quot;${location}&quot; &amp;&amp; \
+    echo &quot; ---&gt; using location = ${location}&quot; &amp;&amp; \
+    sh -c &quot;sed -i.old -e 's/location_name.*$/location_name = $location/' \
+ ${agent_conf_file}&quot;
+
+    test -n &quot;${instance_group}&quot; &amp;&amp; \
+    echo &quot; ---&gt; using instance group = ${instance_group}&quot; &amp;&amp; \
+    sh -c &quot;sed -i.old -e 's/instance_group.*$/instance_group = $instance_group/' \
+ ${agent_conf_file}&quot;
+
+    test -f &quot;${agent_conf_file}&quot; &amp;&amp; \
+    chmod 644 ${agent_conf_file} &amp;&amp; \
+    chown nginx ${agent_conf_file} &gt; /dev/null 2&gt;&amp;1
+
+    test -f &quot;${nginx_status_conf}&quot; &amp;&amp; \
+    chmod 644 ${nginx_status_conf} &amp;&amp; \
+    chown nginx ${nginx_status_conf} &gt; /dev/null 2&gt;&amp;1
+fi
+
+if ! grep '^api_key.*=[ ]*[[:alnum:]].*' ${agent_conf_file} &gt; /dev/null 2&gt;&amp;1; then
+    echo &quot;no api_key found in ${agent_conf_file}! exiting.&quot;
+    exit 1
+fi
+
+echo &quot;starting controller-agent ...&quot;
+/usr/bin/nginx-controller-agent &gt; /dev/null 2&gt;&amp;1 &lt; /dev/null &amp;
+
+agent_pid=$!
+
+if [ $? != 0 ]; then
+    echo &quot;couldn't start the agent, please check ${agent_log_file}&quot;
+    exit 1
+fi
+
+wait_term()
+{
+    wait ${agent_pid}
+    trap - TERM
+    kill -QUIT &quot;${nginx_pid}&quot; 2&gt;/dev/null
+    echo &quot;waiting for nginx to stop...&quot;
+    wait ${nginx_pid}
+}
+
+wait_term
+
+echo &quot;controller-agent process has stopped, exiting.&quot;
+</code></pre> <p>entrypoint.sh파일은 크게 두 부분으로 구분할 수 있습니다.</p> <ol> <li> <p>API GW 이미지 내의 agent.conf 파일 수정 (변수 Override)</p> </li> <li> <p>conf 수정에 따른 NGINX와 Controller-agent의 재시작</p> </li> </ol> <p>Controller 설치 과정에서 생성된 api_key, controller_api_url, location 등의 설정 값을 Entrypoint.sh를 통해, ENV에서 설정한 값으로 재반영하도록 작성한 것으로 보입니다.</p> <ul> <li>따라서, Kubernetes Deployment YAML 파일을 통해 API Key, Location, 그리고 5월 말 기준 아직 베타 기능인 instance group까지 변수를 override하여 사용할 수 있겠습니다.</li> </ul> <p>Override해서 사용할 수 있는 변수는 아래와 같습니다.</p> <pre><code>ENV_CONTROLLER_API_KEY
+ENV_CONTROLLER_API_URL
+ENV_CONTROLLER_INSTANCE_NAME
+ENV_CONTROLLER_LOCATION
+ENV_CONTROLLER_INSTANCE_GROUP
+</code></pre> <p><strong>nginx-plus-api.conf</strong></p> <pre><code class=language-nginx>server {
+    listen 8080;
+    location /api/ {
+        api write=on;
+    }
+    location = /dashboard.html {
+        root /usr/share/nginx/html;
+    }
+    # Redirect requests for &quot;/&quot; to &quot;/dashboard.html&quot;
+    location / {
+        return 301 /dashboard.html;
+    }
+    # Redirect requests for pre-R14 dashboard
+    location /status.html {
+        return 301 /dashboard.html;
+    }
+}
+# vim: syntax=nginx
+</code></pre> <p>Controller-agent는 각 API Gateway의 Metric 값을 API 조회를 통해 가져옵니다. 이를 위한 NGINX Server Context config입니다.</p> <h3 id=docker-build>Docker Build<a class=headerlink href=#docker-build title="Permanent link">&para;</a></h3> <p>Build 명령어는 다음과 같습니다.</p> <pre><code class=language-bash>sudo docker build --build-arg CONTROLLER_URL=https://&lt;fqdn&gt;/install/controller-agent --build-arg API_KEY='abcdefxxxxxx' -t nginx-agent .
+</code></pre> <p>Build-argument인 CONTROLLER_URL은 Controller 버전에 따라 다를 수 있습니다.</p> <ul> <li> <p>NGINX Controller v3.10 이전<br> <code>CONTROLLER_URL=https://&lt;fqdn&gt;:8443/1.4/install/controller</code></p> </li> <li> <p>NGINX Controller v3.11 이후<br> <code>CONTROLLER_URL=https://&lt;fqdn&gt;/install/controller-agent</code></p> </li> </ul> </article> </div> </div> </main> <footer class=md-footer> <nav class="md-footer__inner md-grid" aria-label=Footer> <a href=../Arcadia-and-NGINX-Controller-Configuration-Hands-on/ class="md-footer__link md-footer__link--prev" aria-label="Previous: Arcadia and NGINX Controller Configuration" rel=prev> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg> </div> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Previous </span> Arcadia and NGINX Controller Configuration </div> </div> </a> <a href=../ConfigDB-Manual-Restore/ class="md-footer__link md-footer__link--next" aria-label="Next: ConfigDB Manual Restore" rel=next> <div class=md-footer__title> <div class=md-ellipsis> <span class=md-footer__direction> Next </span> ConfigDB Manual Restore </div> </div> <div class="md-footer__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg> </div> </a> </nav> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-copyright> Made with <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> </div> </div> </footer> </div> <div class=md-dialog data-md-component=dialog> <div class="md-dialog__inner md-typeset"></div> </div> <script id=__config type=application/json>{"base": "../../..", "features": [], "search": "../../../assets/javascripts/workers/search.16e2a7d4.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script> <script src=../../../assets/javascripts/bundle.5a2dcb6a.min.js></script> </body> </html>
